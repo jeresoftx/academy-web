@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Academia abierta de ingeniería de software, Computer Science y arquitectura, en español.',
+} = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} · Jeresoft Academy</title>
+    <script is:inline>
+      // Se ejecuta antes del primer paint para evitar parpadeo (FOUC).
+      // Temas soportados hoy: light, dark, system. El esquema es extensible:
+      // un tema nuevo solo agrega su bloque de variables CSS y una entrada
+      // en THEMES de ThemeToggle.vue, sin tocar este script.
+      const STORAGE_KEY = 'academy-theme';
+      const stored = localStorage.getItem(STORAGE_KEY) ?? 'system';
+      const resolved =
+        stored === 'system'
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+          : stored;
+      document.documentElement.classList.toggle('dark', resolved === 'dark');
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

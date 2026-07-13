@@ -1,0 +1,37 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '@/components/ui/card';
+---
+
+<Layout title="Inicio">
+  <header class="flex items-center justify-between border-b border-border p-4">
+    <span class="font-semibold">Jeresoft Academy</span>
+    <ThemeToggle client:load />
+  </header>
+
+  <main class="mx-auto max-w-2xl p-8">
+    <Card>
+      <CardHeader>
+        <CardTitle>El camino</CardTitle>
+        <CardDescription>
+          Aquí vivirá la ruta completa del currículum (RFC-0001 §6): dónde está
+          el visitante, qué sigue y qué le falta. Todavía no hay cursos en
+          producción, así que esta página es el andamiaje inicial del sitio.
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="text-sm text-muted-foreground">
+        Ver <a class="underline" href="https://github.com/jeresoftx/academy-web"
+          >el repositorio</a
+        >
+        y el <code>ROADMAP.md</code> para el estado real de avance.
+      </CardContent>
+    </Card>
+  </main>
+</Layout>
