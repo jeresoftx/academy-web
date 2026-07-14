@@ -833,15 +833,15 @@ git commit -m "docs: define initial academy badges"
 
 ## Phase 6: Final Verification Gates
 
-- [ ] Run `pnpm check`.
-- [ ] Run `pnpm test`.
-- [ ] Run `git diff --check`.
-- [ ] Verify `/courses/algorithms/sliding-window/` still renders without requiring login.
-- [ ] Verify local progress persists after reload.
-- [ ] Verify GitHub prompt never says course access is blocked.
-- [ ] Verify `/account` explains GitHub identity as progress and badges.
-- [ ] Confirm no OAuth secret is committed.
-- [ ] Confirm new environment variables are documented only as names, not values.
+- [x] Run `pnpm check`.
+- [x] Run `pnpm test`.
+- [x] Run `git diff --check`.
+- [x] Verify `/courses/algorithms/sliding-window/` still renders without requiring login.
+- [x] Verify local progress persists after reload.
+- [x] Verify GitHub prompt never says course access is blocked.
+- [x] Verify `/account` explains GitHub identity as progress and badges.
+- [x] Confirm no OAuth secret is committed.
+- [x] Confirm new environment variables are documented only as names, not values.
 
 ## Open Decisions To Revisit Before Backend Work
 
