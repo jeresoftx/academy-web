@@ -1,0 +1,246 @@
+---
+import SiteFooter from '@/components/SiteFooter.astro';
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout
+  title="Tu avance"
+  description="Progreso, insignias y actividad de Jeresoft Academy."
+>
+  <div class="account-page">
+    <header class="account-topbar" aria-label="Navegación de cuenta">
+      <a class="brand-lockup" href="/" aria-label="Jeresoft Academy">
+        <span class="brand-mark">J</span>
+        <span>Jeresoft Academy</span>
+      </a>
+
+      <nav class="account-links" aria-label="Secciones de la academia">
+        <a href="/courses/algorithms/">Algoritmos</a>
+        <a href="/courses/design-patterns/">Patrones de diseño</a>
+      </nav>
+
+      <ThemeToggle client:load />
+    </header>
+
+    <main class="account-shell">
+      <section class="account-hero">
+        <p class="system-line">Jeresoft Academy</p>
+        <h1>Tu avance</h1>
+        <p>
+          Progreso sincronizado con GitHub, insignias y futuras verificaciones
+          de ejercicios.
+        </p>
+        <a href="/auth/github">Guardar progreso con GitHub</a>
+      </section>
+
+      <section class="account-grid" aria-label="Resumen de avance">
+        <article>
+          <p class="system-line">Hoy</p>
+          <h2>Progreso local</h2>
+          <p>
+            Puedes marcar capítulos completados desde este navegador sin crear
+            cuenta. Esa experiencia se conserva aunque el backend todavía no
+            exista.
+          </p>
+        </article>
+
+        <article>
+          <p class="system-line">Siguiente</p>
+          <h2>GitHub como identidad</h2>
+          <p>
+            GitHub servirá para sincronizar progreso, asociar entregas y crear
+            una historia de aprendizaje verificable.
+          </p>
+        </article>
+
+        <article>
+          <p class="system-line">Oficio</p>
+          <h2>Insignias</h2>
+          <p>
+            Las insignias aparecerán cuando completes bloques verificables. No
+            reemplazan práctica, revisión ni proyectos reales.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>
+
+<style>
+  .account-page {
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(240, 176, 8, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240, 176, 8, 0.04) 1px, transparent 1px),
+      var(--background);
+    background-size: 36px 36px;
+  }
+
+  .account-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) auto auto;
+    gap: 24px;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--background) 92%, transparent);
+    padding: 14px max(20px, calc((100vw - 1180px) / 2));
+    backdrop-filter: blur(18px);
+  }
+
+  .brand-lockup,
+  .account-links,
+  .system-line {
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    letter-spacing: 0;
+  }
+
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--foreground);
+    font-weight: 760;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+    box-shadow: inset 0 0 0 3px var(--academy-sun);
+  }
+
+  .account-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .account-links a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .account-links a:hover {
+    color: var(--foreground);
+  }
+
+  .account-shell {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: clamp(42px, 8vw, 96px) 0 84px;
+  }
+
+  .account-hero {
+    display: grid;
+    gap: 18px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: clamp(28px, 5vw, 56px);
+  }
+
+  .system-line {
+    margin: 0;
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h1 {
+    max-width: 720px;
+    font-size: clamp(58px, 10vw, 128px);
+    line-height: 0.88;
+    font-weight: 900;
+  }
+
+  h2 {
+    color: var(--foreground);
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .account-hero p:not(.system-line),
+  .account-grid p:not(.system-line) {
+    max-width: 700px;
+    color: var(--academy-readable-muted);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .account-hero a {
+    min-height: 44px;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--academy-ink);
+    color: var(--academy-sun);
+    padding: 0 18px;
+    font-weight: 820;
+    text-decoration: none;
+  }
+
+  .account-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+
+  .account-grid article {
+    display: grid;
+    gap: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 22px;
+  }
+
+  @media (max-width: 860px) {
+    .account-topbar,
+    .account-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .account-links {
+      grid-column: 1 / -1;
+      flex-wrap: wrap;
+      order: 3;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .account-topbar,
+    .account-shell {
+      width: auto;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+</style>

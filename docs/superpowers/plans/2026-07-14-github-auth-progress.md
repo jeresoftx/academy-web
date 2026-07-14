@@ -27,7 +27,7 @@
 - [x] Create `src/components/GitHubAuthPrompt.vue` for the "Guardar progreso con GitHub" callout.
 - [x] Modify `src/pages/courses/[slug]/[chapter].astro` to show progress controls and GitHub prompt.
 - [x] Modify `tests/home.spec.ts` or create `tests/progress.spec.ts` for local progress and auth prompt behavior.
-- [ ] Phase 5 creates `src/pages/account.astro` for profile/progress overview.
+- [x] Phase 5 creates `src/pages/account.astro` for profile/progress overview.
 - [ ] Phase 3 creates backend crates or packages when Rust GraphQL enters the repo.
 - [ ] Phase 3 creates server-side models for users, progress, and badges.
 
@@ -728,7 +728,7 @@ git commit -m "feat: add progress sync contract"
 - Create: `src/pages/account.astro`
 - Test: `tests/account.spec.ts`
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 ```ts
 import { test, expect } from '@playwright/test';
@@ -744,7 +744,7 @@ test('la página de cuenta explica el valor de GitHub', async ({ page }) => {
 });
 ```
 
-- [ ] **Step 2: Create static account page**
+- [x] **Step 2: Create static account page**
 
 Create `src/pages/account.astro`:
 
@@ -775,7 +775,7 @@ import Layout from '@/layouts/Layout.astro';
 </Layout>
 ```
 
-- [ ] **Step 3: Run and commit**
+- [x] **Step 3: Run and commit**
 
 ```bash
 pnpm check
