@@ -790,7 +790,7 @@ git commit -m "feat: add account progress page"
 
 - Create: `docs/badges.md`
 
-- [ ] **Step 1: Create badge catalog**
+- [x] **Step 1: Create badge catalog**
 
 Create `docs/badges.md`:
 
@@ -822,7 +822,7 @@ code review, or project work.
 - Requirement: all chapters completed.
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add docs/badges.md
