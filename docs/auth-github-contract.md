@@ -59,3 +59,28 @@ monorepo, the preferred structure is:
 Until that split exists, `/auth/github` is a product-facing placeholder in the
 frontend. It should not be wired to a real OAuth flow without the API boundary,
 session strategy, environment variables, and tests described in this contract.
+
+## Progress Sync Contract
+
+The first backend release should expose an idempotent GraphQL mutation:
+
+```graphql
+mutation SyncProgress($input: SyncProgressInput!) {
+  syncProgress(input: $input) {
+    courseSlug
+    chapterSlug
+    state
+    completedAt
+    updatedAt
+  }
+}
+```
+
+Merge rules:
+
+- Local `completed` wins over remote `in_progress`.
+- Newest `updatedAt` wins when states differ and neither state is completed.
+- Sync is idempotent; sending the same snapshot twice must not duplicate rows.
+- Sync never deletes remote progress.
+- Corrupt or unknown local entries are ignored, not treated as destructive
+  updates.

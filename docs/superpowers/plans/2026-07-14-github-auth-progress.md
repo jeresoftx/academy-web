@@ -638,7 +638,7 @@ git commit -m "feat: add github oauth backend boundary"
 - Future frontend file: `src/lib/progress/sync-progress.ts`
 - Future backend mutation: `syncProgress`
 
-- [ ] **Step 1: Add GraphQL mutation contract**
+- [x] **Step 1: Add GraphQL mutation contract**
 
 Add to `docs/auth-github-contract.md`:
 
