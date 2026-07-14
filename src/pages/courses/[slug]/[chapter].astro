@@ -1,4 +1,5 @@
 ---
+import GitHubAuthPrompt from '@/components/GitHubAuthPrompt.vue';
 import SiteFooter from '@/components/SiteFooter.astro';
 import ProgressToggle from '@/components/ProgressToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
@@ -306,6 +307,8 @@ const chapterSections = [
             />
           </div>
         </div>
+
+        <GitHubAuthPrompt client:load />
       </aside>
     </main>
 

@@ -12,11 +12,11 @@
 
 ## Non-Negotiable Product Decisions
 
-- [ ] Course pages remain publicly readable without an account.
-- [ ] GitHub login is for progress, identity, badges, exercise submission, and verification.
-- [ ] Anonymous local progress remains available indefinitely.
+- [x] Course pages remain publicly readable without an account.
+- [x] GitHub login is for progress, identity, badges, exercise submission, and verification.
+- [x] Anonymous local progress remains available indefinitely.
 - [ ] If the project ever decides to block course content behind login, that requires a new RFC because it changes RFC-0001 §6.
-- [ ] The UI copy must say "Guardar progreso con GitHub" or similar, not "Desbloquear curso".
+- [x] The UI copy must say "Guardar progreso con GitHub" or similar, not "Desbloquear curso".
 - [ ] No personal data beyond the minimum GitHub profile and learning progress is stored.
 
 ## File Structure
@@ -24,8 +24,8 @@
 - [x] Create `src/lib/progress/types.ts` for progress/auth domain types.
 - [x] Create `src/lib/progress/local-progress.ts` for localStorage read/write.
 - [x] Create `src/components/ProgressToggle.vue` for chapter completion controls.
-- [ ] Create `src/components/GitHubAuthPrompt.vue` for the "Guardar progreso con GitHub" callout.
-- [ ] Modify `src/pages/courses/[slug]/[chapter].astro` to show progress controls and GitHub prompt.
+- [x] Create `src/components/GitHubAuthPrompt.vue` for the "Guardar progreso con GitHub" callout.
+- [x] Modify `src/pages/courses/[slug]/[chapter].astro` to show progress controls and GitHub prompt.
 - [x] Modify `tests/home.spec.ts` or create `tests/progress.spec.ts` for local progress and auth prompt behavior.
 - [ ] Phase 5 creates `src/pages/account.astro` for profile/progress overview.
 - [ ] Phase 3 creates backend crates or packages when Rust GraphQL enters the repo.
@@ -374,7 +374,7 @@ git commit -m "feat: add anonymous chapter progress"
 - Modify: `src/pages/courses/[slug]/[chapter].astro`
 - Test: `tests/progress.spec.ts`
 
-- [ ] **Step 1: Write failing test**
+- [x] **Step 1: Write failing test**
 
 Add:
 
@@ -396,7 +396,7 @@ test('el capítulo invita a guardar progreso con GitHub sin bloquear lectura', a
 });
 ```
 
-- [ ] **Step 2: Run and verify failure**
+- [x] **Step 2: Run and verify failure**
 
 Run:
 
@@ -406,7 +406,7 @@ pnpm test -- --grep "Guardar progreso con GitHub"
 
 Expected: FAIL because the prompt does not exist yet.
 
-- [ ] **Step 3: Create prompt component**
+- [x] **Step 3: Create prompt component**
 
 Create `src/components/GitHubAuthPrompt.vue`:
 
@@ -476,7 +476,7 @@ p {
 </style>
 ```
 
-- [ ] **Step 4: Mount prompt in chapter right rail**
+- [x] **Step 4: Mount prompt in chapter right rail**
 
 Modify `src/pages/courses/[slug]/[chapter].astro` and place:
 
@@ -486,7 +486,7 @@ Modify `src/pages/courses/[slug]/[chapter].astro` and place:
 
 in the right rail below the `Estado` card.
 
-- [ ] **Step 5: Run checks and commit**
+- [x] **Step 5: Run checks and commit**
 
 ```bash
 pnpm check
