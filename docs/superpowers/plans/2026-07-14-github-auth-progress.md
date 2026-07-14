@@ -505,7 +505,7 @@ git commit -m "feat: add github progress prompt"
 
 - Create: `docs/auth-github-contract.md`
 
-- [ ] **Step 1: Create contract document**
+- [x] **Step 1: Create contract document**
 
 Create `docs/auth-github-contract.md` with:
 
@@ -547,7 +547,7 @@ issue badges, and later verify exercises. Course content remains public.
 Do not store email unless a future feature requires it and the UI explains why.
 ```
 
-- [ ] **Step 2: Review against RFC-0001 §6**
+- [x] **Step 2: Review against RFC-0001 §6**
 
 Confirm the document includes:
 
@@ -556,7 +556,7 @@ Confirm the document includes:
 - GitHub only for sync/identity
 - minimal data model
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add docs/auth-github-contract.md
@@ -570,7 +570,7 @@ git commit -m "docs: define github auth contract"
 - Future backend route: `apps/api` or backend crate path chosen when Fase 2 begins.
 - Future frontend integration: auth callback route.
 
-- [ ] **Step 1: Confirm backend location**
+- [x] **Step 1: Confirm backend location**
 
 Before coding, choose one:
 
