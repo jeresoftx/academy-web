@@ -4,12 +4,17 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
 }
 
 const {
   title,
   description = 'Academia abierta de ingeniería de software, Computer Science y arquitectura, en español.',
+  image,
 } = Astro.props;
+
+const absoluteImage =
+  image && Astro.site ? new URL(image, Astro.site).toString() : image;
 ---
 
 <html lang="es">
@@ -19,6 +24,11 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={`${title} · Jeresoft Academy`} />
+    <meta property="og:description" content={description} />
+    {absoluteImage && <meta property="og:image" content={absoluteImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    {absoluteImage && <meta name="twitter:image" content={absoluteImage} />}
     <title>{title} · Jeresoft Academy</title>
     <script is:inline>
       // Se ejecuta antes del primer paint para evitar parpadeo (FOUC).

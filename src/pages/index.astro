@@ -1,37 +1,1163 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
 import ThemeToggle from '@/components/ThemeToggle.vue';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
+import { launchTracks, learningFlow, productionPipeline } from '@/data/launch';
+
+const heroTerminal = [
+  '$ cargo test --workspace',
+  'concepto -> problema -> alternativas -> justificación -> código',
+  'calidad sobre velocidad · humano decide',
+];
 ---
 
-<Layout title="Inicio">
-  <header class="flex items-center justify-between border-b border-border p-4">
-    <span class="font-semibold">Jeresoft Academy</span>
-    <ThemeToggle client:load />
-  </header>
+<Layout
+  title="Inicio"
+  description="Jeresoft Academy: academia abierta de ingeniería de software, Computer Science y arquitectura en español."
+>
+  <div class="site-shell">
+    <header class="topbar" aria-label="Navegación principal">
+      <a class="brand-lockup" href="/" aria-label="Jeresoft Academy">
+        <span class="brand-mark">J</span>
+        <span>Jeresoft Academy</span>
+      </a>
 
-  <main class="mx-auto max-w-2xl p-8">
-    <Card>
-      <CardHeader>
-        <CardTitle>El camino</CardTitle>
-        <CardDescription>
-          Aquí vivirá la ruta completa del currículum (RFC-0001 §6): dónde está
-          el visitante, qué sigue y qué le falta. Todavía no hay cursos en
-          producción, así que esta página es el andamiaje inicial del sitio.
-        </CardDescription>
-      </CardHeader>
-      <CardContent class="text-sm text-muted-foreground">
-        Ver <a class="underline" href="https://github.com/jeresoftx/academy-web"
-          >el repositorio</a
-        >
-        y el <code>ROADMAP.md</code> para el estado real de avance.
-      </CardContent>
-    </Card>
-  </main>
+      <nav class="nav-links" aria-label="Secciones">
+        <a href="#rutas">Rutas</a>
+        <a href="#metodo">Método</a>
+        <a href="#produccion">Producción</a>
+        <a href="https://github.com/jeresoftx">GitHub</a>
+      </nav>
+
+      <ThemeToggle client:load />
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <div class="hero-copy">
+          <p class="system-line">RFC-0001 · sitio web fase 1</p>
+          <h1>Aprende a fondo. Construye como profesional.</h1>
+          <p class="hero-lead">
+            La primera versión de Jeresoft Academy nace con lo que ya existe:
+            código, pruebas, notas y patrones reales. Los videos llegarán a su
+            ritmo; el camino puede empezar desde los repositorios.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button-primary" href="#rutas">Comenzar por código</a>
+            <a class="button-secondary" href="#metodo">Ver el método</a>
+          </div>
+        </div>
+
+        <div class="terminal-stack" aria-label="Resumen técnico">
+          <div class="terminal-card terminal-card-main">
+            <div class="terminal-head">
+              <span>jeresoft-academy</span>
+              <span>verificación</span>
+            </div>
+            <div class="terminal-body">
+              {
+                heroTerminal.map((line, index) => (
+                  <span class={index === 1 ? 'terminal-gold' : ''}>{line}</span>
+                ))
+              }
+            </div>
+          </div>
+
+          <div class="terminal-card terminal-card-small">
+            <div class="terminal-head">
+              <span>primeros bloques</span>
+              <span>listos</span>
+            </div>
+            <div class="terminal-body">
+              <span>01 · rust-algorithms</span>
+              <span>02 · rust-design-patterns</span>
+              <span>03 · visualizaciones web</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="statement-band" aria-label="Estado inicial">
+        <h2>Publicar sin fingir completitud.</h2>
+        <p>
+          Esta v0 no promete una academia terminada. Presenta los primeros
+          materiales reales y prepara la experiencia para capítulos, videos,
+          gráficos y laboratorios interactivos.
+        </p>
+      </section>
+
+      <section id="rutas" class="content-section">
+        <div class="section-heading">
+          <div>
+            <p class="system-line">Primeros recorridos del camino</p>
+            <h2>Dos repos reales y una interfaz lista para crecer.</h2>
+          </div>
+          <p>
+            Algoritmos y patrones son la cantera inicial. La web los convierte
+            en rutas legibles mientras se redactan capítulos y se producen
+            assets visuales.
+          </p>
+        </div>
+
+        <div class="track-grid">
+          {
+            launchTracks.map((track) => (
+              <article
+                class={`track-card ${'images' in track ? 'track-card-with-image' : ''}`}
+              >
+                <div
+                  class={`track-art track-art-${track.motif} ${'images' in track ? 'track-art-with-image' : ''}`}
+                >
+                  {'images' in track ? (
+                    <>
+                      <img
+                        class="track-image track-image-light"
+                        src={track.images.light}
+                        alt={`Portada clara de ${track.title}`}
+                        loading="lazy"
+                      />
+                      <img
+                        class="track-image track-image-dark"
+                        src={track.images.dark}
+                        alt={`Portada oscura de ${track.title}`}
+                        loading="lazy"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <span class="track-label">{track.label}</span>
+                      <span class="track-code">{track.code}</span>
+                      <div class="motif motif-graph" aria-hidden="true">
+                        <span class="edge edge-1" />
+                        <span class="edge edge-2" />
+                        <span class="edge edge-3" />
+                        <span class="node node-a" />
+                        <span class="node node-b" />
+                        <span class="node node-c" />
+                        <span class="node node-d" />
+                      </div>
+                      <div class="motif motif-tiles" aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                      <div class="motif motif-system" aria-hidden="true">
+                        <span class="box box-a" />
+                        <span class="box box-b" />
+                        <span class="box box-c" />
+                        <span class="wire wire-a" />
+                        <span class="wire wire-b" />
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                <div class="track-body">
+                  <div>
+                    <p class="track-status">{track.status}</p>
+                    <h3>{track.title}</h3>
+                    <p>{track.summary}</p>
+                  </div>
+
+                  <ul class="topic-list" aria-label={`Temas de ${track.title}`}>
+                    {track.topics.map((topic) => (
+                      <li>{topic}</li>
+                    ))}
+                  </ul>
+
+                  <a class="repo-link" href={track.href}>
+                    <span>{track.repo}</span>
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
+                  {'courseHref' in track && (
+                    <a class="course-link" href={track.courseHref}>
+                      <span>Ver ruta del curso</span>
+                      <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="metodo" class="content-section method-section">
+        <div class="section-heading">
+          <div>
+            <p class="system-line">Método de aprendizaje</p>
+            <h2>El video no bloquea el avance.</h2>
+          </div>
+          <p>
+            La academia se publica por capas. Primero lectura y código
+            verificable; luego escenas, videos y laboratorios cuando aporten
+            claridad real.
+          </p>
+        </div>
+
+        <div class="method-grid">
+          {
+            learningFlow.map((item, index) => (
+              <article class="method-card">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="editorial-feature" aria-label="Del ruido al criterio">
+        <div class="feature-copy">
+          <p class="system-line">Del ruido al criterio</p>
+          <h2>Menos recetas. Más oficio.</h2>
+          <p>
+            Cada curso y capítulo tendrá una ilustración temática: grafos para
+            algoritmos, piezas para patrones, nodos para sistemas. El arte
+            acompaña el concepto, no lo sustituye.
+          </p>
+        </div>
+
+        <div class="feature-art" aria-hidden="true">
+          <div class="feature-glow"></div>
+          <div class="feature-screen">
+            <div class="terminal-head">
+              <span>workspace</span>
+              <span>ready</span>
+            </div>
+            <div class="screen-lines">
+              <span class="line-gold"></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span class="line-short line-gold"></span>
+            </div>
+          </div>
+          <div class="feature-doc">
+            <strong>RFC-0001</strong>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="feature-flow">&rarr;</div>
+        </div>
+      </section>
+
+      <section id="produccion" class="content-section pipeline-section">
+        <div class="section-heading">
+          <div>
+            <p class="system-line">Producción de cada bloque</p>
+            <h2>Un flujo repetible para curso, capítulo y asset.</h2>
+          </div>
+          <p>
+            La v0 queda preparada para producir contenido con IA sin perder la
+            regla rectora: la IA acelera, el criterio humano decide.
+          </p>
+        </div>
+
+        <ol class="pipeline-list">
+          {
+            productionPipeline.map((step, index) => (
+              <li>
+                <span class="pipeline-index">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span>{step}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
 </Layout>
+
+<style>
+  .site-shell {
+    min-height: 100vh;
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--academy-ink) 7%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--academy-ink) 6%, transparent) 1px,
+        transparent 1px
+      ),
+      var(--background);
+    background-size:
+      44px 44px,
+      44px 44px,
+      auto;
+  }
+
+  :global(.dark) .site-shell {
+    background:
+      radial-gradient(
+        circle at 78% 8%,
+        rgba(217, 154, 50, 0.12),
+        transparent 30%
+      ),
+      linear-gradient(90deg, rgba(240, 189, 100, 0.05) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(240, 189, 100, 0.04) 1px, transparent 1px),
+      var(--background);
+    background-size:
+      auto,
+      44px 44px,
+      44px 44px,
+      auto;
+  }
+
+  .topbar {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 24px;
+    align-items: center;
+    padding: 24px 0;
+  }
+
+  .brand-lockup,
+  .nav-links,
+  .system-line,
+  .terminal-card,
+  .track-label,
+  .track-code,
+  .track-status,
+  .topic-list,
+  .repo-link,
+  .method-card span,
+  .pipeline-list {
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    letter-spacing: 0;
+  }
+
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--foreground);
+    font-weight: 760;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+    box-shadow: inset 0 0 0 3px var(--academy-sun);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .nav-links a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    color: var(--foreground);
+  }
+
+  .hero-section {
+    width: min(1160px, calc(100% - 40px));
+    min-height: calc(100vh - 92px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.94fr) minmax(420px, 1.06fr);
+    gap: 52px;
+    align-items: center;
+    padding: 36px 0 70px;
+  }
+
+  .system-line {
+    margin: 0;
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .hero-copy h1 {
+    max-width: 660px;
+    margin: 14px 0 22px;
+    font-size: clamp(52px, 8vw, 112px);
+    line-height: 0.88;
+    font-weight: 860;
+    letter-spacing: 0;
+  }
+
+  .hero-lead {
+    max-width: 570px;
+    margin: 0;
+    color: var(--academy-readable-muted);
+    font-size: 19px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  .button-primary,
+  .button-secondary {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0 18px;
+    font-size: 14px;
+    font-weight: 780;
+    text-decoration: none;
+    border: 1px solid var(--academy-ink);
+  }
+
+  .button-primary {
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+  }
+
+  .button-secondary {
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+  }
+
+  .terminal-stack {
+    display: grid;
+    gap: 14px;
+  }
+
+  .terminal-card {
+    border: 1px solid rgba(240, 189, 100, 0.28);
+    border-radius: 8px;
+    overflow: hidden;
+    color: var(--academy-terminal-foreground);
+    background: var(--academy-terminal);
+    box-shadow: 0 28px 80px rgba(13, 12, 9, 0.24);
+  }
+
+  .terminal-card-main {
+    transform: rotate(-1.2deg);
+  }
+
+  .terminal-card-small {
+    width: 78%;
+    justify-self: end;
+    transform: rotate(1deg);
+    background: var(--academy-terminal-soft);
+  }
+
+  .terminal-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid rgba(245, 239, 230, 0.12);
+    padding: 12px 16px;
+    color: #cfc5b5;
+    font-size: 13px;
+  }
+
+  .terminal-body {
+    display: grid;
+    gap: 10px;
+    padding: 18px 20px 20px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .terminal-card-small .terminal-body {
+    font-size: 13px;
+  }
+
+  .terminal-gold {
+    color: var(--academy-sun-soft);
+    font-weight: 860;
+  }
+
+  .statement-band {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 42px;
+    align-items: start;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--academy-band);
+    padding: 46px max(20px, calc((100vw - 1160px) / 2));
+  }
+
+  .statement-band h2,
+  .section-heading h2,
+  .feature-copy h2 {
+    margin: 0;
+    color: var(--foreground);
+    font-weight: 820;
+    letter-spacing: 0;
+  }
+
+  .statement-band h2 {
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.04;
+  }
+
+  .statement-band p,
+  .section-heading > p,
+  .feature-copy p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    line-height: 1.65;
+  }
+
+  .content-section {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 70px 0 0;
+  }
+
+  .pipeline-section {
+    padding-bottom: 76px;
+  }
+
+  .section-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: 34px;
+    align-items: end;
+    margin-bottom: 24px;
+  }
+
+  .section-heading h2 {
+    max-width: 720px;
+    margin-top: 10px;
+    font-size: clamp(32px, 4.6vw, 58px);
+    line-height: 0.98;
+  }
+
+  .track-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .track-card {
+    display: grid;
+    grid-template-rows: 190px 1fr;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    box-shadow: 0 18px 42px rgba(13, 12, 9, 0.06);
+  }
+
+  .track-card-with-image {
+    grid-template-rows: auto 1fr;
+  }
+
+  .track-art {
+    position: relative;
+    overflow: hidden;
+    padding: 16px;
+    color: var(--academy-sun);
+    background:
+      linear-gradient(90deg, rgba(255, 210, 26, 0.14) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255, 210, 26, 0.12) 1px, transparent 1px),
+      var(--academy-ink);
+    background-size:
+      22px 22px,
+      22px 22px,
+      auto;
+  }
+
+  .track-art-with-image {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    min-height: 190px;
+    padding: 0;
+    background: var(--academy-ink);
+  }
+
+  .track-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .track-image-dark {
+    display: none;
+  }
+
+  :global(html.dark) .track-image-light {
+    display: none;
+  }
+
+  :global(html.dark) .track-image-dark {
+    display: block;
+  }
+
+  .track-label {
+    position: relative;
+    z-index: 3;
+    float: right;
+    border-radius: 999px;
+    background: var(--academy-sun);
+    color: var(--academy-ink);
+    padding: 5px 9px;
+    font-size: 10px;
+    font-weight: 860;
+    text-transform: uppercase;
+  }
+
+  .track-code {
+    position: absolute;
+    left: 16px;
+    bottom: 14px;
+    z-index: 3;
+    color: var(--academy-sun);
+    font-size: 46px;
+    font-weight: 880;
+    line-height: 1;
+  }
+
+  .track-body {
+    display: grid;
+    gap: 18px;
+    background: var(--academy-card-accent);
+    padding: 18px;
+  }
+
+  .track-status {
+    margin: 0 0 8px;
+    color: #6a4714;
+    font-size: 11px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  :global(.dark) .track-status {
+    color: #f0bd64;
+  }
+
+  .track-body h3 {
+    margin: 0 0 8px;
+    color: var(--academy-card-foreground);
+    font-size: 20px;
+    font-weight: 820;
+    letter-spacing: 0;
+  }
+
+  .track-body p {
+    margin: 0;
+    color: var(--academy-card-muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topic-list li {
+    border: 0;
+    border-radius: 6px;
+    background: color-mix(in srgb, #5f3d12 12%, transparent);
+    padding: 4px 8px;
+    color: color-mix(in srgb, var(--academy-card-foreground) 76%, #5f3d12);
+    font-size: 11px;
+    font-weight: 620;
+    line-height: 1;
+  }
+
+  :global(.dark) .topic-list li {
+    background: rgba(95, 61, 18, 0.28);
+    color: #d9b56f;
+  }
+
+  .repo-link {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: center;
+    color: var(--academy-card-foreground);
+    font-size: 13px;
+    font-weight: 760;
+    text-decoration: none;
+  }
+
+  .course-link {
+    min-height: 38px;
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--academy-card-foreground);
+    color: var(--academy-card-accent);
+    padding: 0 13px;
+    font-size: 13px;
+    font-weight: 820;
+    text-decoration: none;
+  }
+
+  .motif {
+    display: none;
+  }
+
+  .track-art-graph .motif-graph,
+  .track-art-tiles .motif-tiles,
+  .track-art-system .motif-system {
+    display: block;
+  }
+
+  .node,
+  .edge,
+  .box,
+  .wire {
+    position: absolute;
+  }
+
+  .node {
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--academy-sun);
+    box-shadow: 0 0 0 6px rgba(255, 210, 26, 0.12);
+  }
+
+  .node-a {
+    left: 23%;
+    top: 48%;
+  }
+  .node-b {
+    left: 48%;
+    top: 25%;
+  }
+  .node-c {
+    left: 68%;
+    top: 58%;
+  }
+  .node-d {
+    left: 84%;
+    top: 22%;
+  }
+
+  .edge {
+    z-index: 1;
+    height: 2px;
+    background: rgba(240, 189, 100, 0.72);
+    transform-origin: left center;
+  }
+
+  .edge-1 {
+    left: 26%;
+    top: 55%;
+    width: 30%;
+    transform: rotate(-30deg);
+  }
+  .edge-2 {
+    left: 51%;
+    top: 34%;
+    width: 27%;
+    transform: rotate(34deg);
+  }
+  .edge-3 {
+    left: 70%;
+    top: 59%;
+    width: 23%;
+    transform: rotate(-50deg);
+  }
+
+  .motif-tiles {
+    position: absolute;
+    inset: 52px 28px 34px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    transform: rotate(-4deg);
+  }
+
+  .track-art-tiles .motif-tiles {
+    display: grid;
+  }
+
+  .motif-tiles span {
+    border: 1px solid rgba(240, 189, 100, 0.56);
+    border-radius: 7px;
+    background: rgba(255, 210, 26, 0.08);
+  }
+
+  .box {
+    width: 78px;
+    height: 48px;
+    border: 1px solid rgba(240, 189, 100, 0.68);
+    border-radius: 6px;
+    background: rgba(255, 210, 26, 0.08);
+  }
+
+  .box-a {
+    left: 28px;
+    bottom: 38px;
+  }
+  .box-b {
+    left: 126px;
+    top: 58px;
+  }
+  .box-c {
+    right: 32px;
+    bottom: 46px;
+  }
+
+  .wire {
+    height: 2px;
+    background: rgba(240, 189, 100, 0.62);
+    transform-origin: left center;
+  }
+
+  .wire-a {
+    left: 92px;
+    top: 127px;
+    width: 84px;
+    transform: rotate(-30deg);
+  }
+  .wire-b {
+    left: 196px;
+    top: 98px;
+    width: 88px;
+    transform: rotate(32deg);
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .method-card {
+    min-height: 210px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 18px;
+  }
+
+  .method-card span {
+    color: var(--academy-gold);
+    font-size: 13px;
+  }
+
+  .method-card h3 {
+    margin: 50px 0 10px;
+    font-size: 22px;
+    font-weight: 820;
+  }
+
+  .method-card p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .editorial-feature {
+    width: min(1160px, calc(100% - 40px));
+    min-height: 330px;
+    margin: 70px auto 0;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+    overflow: hidden;
+    border: 1px solid #2d2114;
+    border-radius: 8px;
+    color: var(--academy-ivory);
+    background:
+      radial-gradient(
+        circle at 82% 26%,
+        rgba(217, 154, 50, 0.44),
+        transparent 28%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(5, 4, 3, 0.98),
+        rgba(8, 7, 5, 0.94) 50%,
+        rgba(28, 18, 7, 0.86)
+      );
+    box-shadow: 0 28px 70px rgba(13, 12, 9, 0.16);
+  }
+
+  .feature-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .feature-copy h2 {
+    max-width: 430px;
+    margin: 12px 0 14px;
+    color: var(--academy-ivory);
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 0.94;
+  }
+
+  .feature-copy p {
+    max-width: 450px;
+    color: #d8cbbb;
+  }
+
+  .feature-art {
+    position: relative;
+    min-height: 330px;
+    overflow: hidden;
+    border-left: 1px solid rgba(240, 189, 100, 0.24);
+    background:
+      linear-gradient(90deg, rgba(240, 189, 100, 0.05) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(240, 189, 100, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .feature-glow {
+    position: absolute;
+    right: 22px;
+    top: 30px;
+    width: 178px;
+    height: 178px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(240, 189, 100, 0.95),
+      rgba(217, 154, 50, 0.22) 54%,
+      transparent 70%
+    );
+  }
+
+  .feature-screen {
+    position: absolute;
+    left: 54px;
+    bottom: 72px;
+    width: min(54%, 330px);
+    height: 170px;
+    overflow: hidden;
+    border: 1px solid rgba(240, 189, 100, 0.5);
+    border-radius: 7px;
+    background: #090806;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.38);
+  }
+
+  .screen-lines {
+    display: grid;
+    gap: 9px;
+    padding: 18px 14px;
+  }
+
+  .screen-lines span {
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(245, 239, 230, 0.18);
+  }
+
+  .screen-lines .line-gold {
+    width: 74%;
+    background: rgba(240, 189, 100, 0.8);
+  }
+
+  .screen-lines .line-short {
+    width: 48%;
+  }
+
+  .feature-doc {
+    position: absolute;
+    right: 48px;
+    bottom: 86px;
+    width: 142px;
+    min-height: 120px;
+    display: grid;
+    gap: 9px;
+    align-content: start;
+    border-radius: 5px;
+    background: rgba(245, 239, 230, 0.94);
+    color: var(--academy-ink);
+    padding: 14px;
+    transform: rotate(4deg);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28);
+  }
+
+  .feature-doc strong {
+    color: #c37b17;
+    font-size: 11px;
+  }
+
+  .feature-doc span {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(10, 9, 7, 0.16);
+  }
+
+  .feature-flow {
+    position: absolute;
+    left: 53%;
+    top: 50%;
+    width: 76px;
+    height: 76px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(240, 189, 100, 0.6);
+    border-radius: 50%;
+    color: var(--academy-gold-soft);
+    background: rgba(9, 8, 6, 0.82);
+    transform: translate(-50%, -50%);
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    font-size: 24px;
+  }
+
+  .pipeline-list {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pipeline-list li {
+    position: relative;
+    min-height: 148px;
+    display: flex;
+    align-items: end;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 14px;
+    color: var(--foreground);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .pipeline-index {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    color: var(--academy-gold);
+    font-weight: 860;
+  }
+
+  @media (max-width: 1040px) {
+    .topbar,
+    .hero-section,
+    .statement-band,
+    .section-heading,
+    .editorial-feature {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-section {
+      min-height: auto;
+    }
+
+    .terminal-card-small {
+      width: 100%;
+    }
+
+    .track-grid,
+    .method-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pipeline-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feature-art {
+      border-left: 0;
+      border-top: 1px solid rgba(240, 189, 100, 0.24);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .topbar {
+      width: min(100% - 32px, 1160px);
+      grid-template-columns: 1fr auto;
+    }
+
+    .nav-links {
+      grid-column: 1 / -1;
+      flex-wrap: wrap;
+      gap: 12px;
+      order: 3;
+    }
+
+    .hero-section,
+    .content-section,
+    .editorial-feature {
+      width: min(100% - 32px, 1160px);
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(44px, 15vw, 76px);
+    }
+
+    .statement-band {
+      padding-inline: 16px;
+    }
+
+    .pipeline-list {
+      grid-template-columns: 1fr;
+    }
+
+    .pipeline-section {
+      padding-bottom: 56px;
+    }
+
+    .feature-copy {
+      padding: 24px;
+    }
+
+    .feature-screen {
+      left: 24px;
+      width: 68%;
+    }
+
+    .feature-doc {
+      right: 24px;
+      opacity: 0.82;
+    }
+  }
+</style>

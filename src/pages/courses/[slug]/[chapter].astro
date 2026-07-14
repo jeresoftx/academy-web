@@ -1,0 +1,955 @@
+---
+import SiteFooter from '@/components/SiteFooter.astro';
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import { courses } from '@/data/courses';
+import { lessons } from '@/data/lessons';
+import Layout from '@/layouts/Layout.astro';
+
+export function getStaticPaths() {
+  return Object.values(lessons).map((lesson) => ({
+    params: { slug: lesson.courseSlug, chapter: lesson.slug },
+    props: { lesson },
+  }));
+}
+
+const { lesson } = Astro.props;
+const course = courses[lesson.courseSlug as keyof typeof courses];
+const visualLetters = Array.from(lesson.visual.sample);
+const lessonHref = `/courses/${course.slug}/${lesson.slug}/`;
+type CoursePathChapter = {
+  number: string;
+  title: string;
+  state: string;
+  href?: string;
+  summary?: string;
+};
+const normalizeChapter = (chapter: CoursePathChapter): CoursePathChapter => ({
+  number: chapter.number,
+  title: chapter.title,
+  state: chapter.state,
+  href: chapter.href,
+  summary: chapter.summary,
+});
+const coursePath: CoursePathChapter[] =
+  'courseMap' in course
+    ? course.courseMap.groups.flatMap((group) =>
+        group.chapters.map(normalizeChapter),
+      )
+    : course.chapters.map(normalizeChapter);
+const currentIndex = coursePath.findIndex(
+  (chapter) => chapter.href === lessonHref,
+);
+const previousChapter =
+  currentIndex > 0 ? coursePath[currentIndex - 1] : undefined;
+const nextChapter =
+  currentIndex >= 0 && currentIndex < coursePath.length - 1
+    ? coursePath[currentIndex + 1]
+    : undefined;
+const chapterSections = [
+  { href: '#idea', label: 'Idea' },
+  { href: '#concepto', label: 'Concepto' },
+  { href: '#laboratorio', label: 'Laboratorio visual' },
+  { href: '#patron', label: 'Patrón mental' },
+  { href: '#codigo', label: 'Código Rust' },
+  { href: '#practica', label: 'Práctica' },
+];
+---
+
+<Layout
+  title={lesson.title}
+  description={lesson.subtitle}
+  image={course.images.ogDark}
+>
+  <div class="lesson-shell">
+    <header class="lesson-topbar" aria-label="Navegación del capítulo">
+      <a class="brand-lockup" href="/" aria-label="Jeresoft Academy">
+        <span class="brand-mark">J</span>
+        <span>Jeresoft Academy</span>
+      </a>
+
+      <nav class="top-links" aria-label="Secciones principales">
+        <a href={`/courses/${course.slug}/`}>Curso</a>
+        <a href="#codigo">Código</a>
+        <a href="#practica">Práctica</a>
+      </nav>
+
+      <ThemeToggle client:load />
+    </header>
+
+    <main class="lesson-layout" aria-label="Contenido del capítulo">
+      <aside class="path-rail">
+        <nav class="path-card" aria-label="Camino del curso">
+          <a class="course-back" href={`/courses/${course.slug}/`}>
+            <span>{course.code} · {course.title}</span>
+            <strong>Camino del curso</strong>
+          </a>
+
+          <ol class="path-list">
+            {
+              coursePath.map((chapter) => (
+                <li>
+                  {chapter.href ? (
+                    <a
+                      class:list={[
+                        'path-link',
+                        chapter.href === lessonHref && 'is-current',
+                      ]}
+                      href={chapter.href}
+                      aria-current={
+                        chapter.href === lessonHref ? 'page' : undefined
+                      }
+                    >
+                      <span>{chapter.number}</span>
+                      <div>
+                        <strong>{chapter.title}</strong>
+                        <small>{chapter.state}</small>
+                      </div>
+                    </a>
+                  ) : (
+                    <div class="path-link is-muted">
+                      <span>{chapter.number}</span>
+                      <div>
+                        <strong>{chapter.title}</strong>
+                        <small>{chapter.state}</small>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </aside>
+
+      <article class="lesson-content">
+        <header class="lesson-hero">
+          <p class="system-line">{course.code} · Capítulo {lesson.number}</p>
+          <h1>{lesson.title}</h1>
+          <p class="subtitle">{lesson.subtitle}</p>
+          <div class="lesson-status">{lesson.status}</div>
+        </header>
+
+        <section
+          id="idea"
+          class="lesson-thesis"
+          aria-label={lesson.framing.label}
+        >
+          <p class="system-line">{lesson.framing.label}</p>
+          <p>{lesson.framing.text}</p>
+        </section>
+
+        <section id="concepto" class="lesson-section concept-grid">
+          <article>
+            <p class="system-line">Concepto</p>
+            <h2>La ventana es un estado que se mueve.</h2>
+            <p>{lesson.concept}</p>
+          </article>
+          <article>
+            <p class="system-line">Problema</p>
+            <h2>Recalcular todo es ruido.</h2>
+            <p>{lesson.problem}</p>
+          </article>
+        </section>
+
+        <section
+          id="laboratorio"
+          class="lesson-section lab-section"
+          aria-label="Laboratorio visual"
+        >
+          <div class="lab-copy">
+            <p class="system-line">{lesson.mantra}</p>
+            <h2>{lesson.visual.heading}</h2>
+            <p>{lesson.visual.description}</p>
+            <span>{lesson.visual.answer}</span>
+          </div>
+
+          <div class="window-lab" aria-label="Simulación estática de ventana">
+            <div class="window-track">
+              {
+                visualLetters.map((letter, index) => (
+                  <span
+                    class:list={[
+                      'letter-cell',
+                      index >= lesson.visual.left &&
+                        index <= lesson.visual.right &&
+                        'is-active',
+                      index === lesson.visual.left && 'is-left',
+                      index === lesson.visual.right && 'is-right',
+                    ]}
+                  >
+                    {letter}
+                  </span>
+                ))
+              }
+            </div>
+            <div class="window-rulers">
+              <span style={`--position: ${lesson.visual.left}`}>left</span>
+              <span style={`--position: ${lesson.visual.right}`}>right</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="patron" class="lesson-section pattern-section">
+          <div>
+            <p class="system-line">Patrón mental</p>
+            <h2>El orden importa más que la sintaxis.</h2>
+          </div>
+          <ol class="step-list">
+            {
+              lesson.patternSteps.map((step, index) => (
+                <li>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <p>{step}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <section id="codigo" class="lesson-section code-section">
+          <div class="code-heading">
+            <div>
+              <p class="system-line">Código Rust</p>
+              <h2>Una ventana variable con memoria de posiciones.</h2>
+            </div>
+            <a class="button-primary" href={lesson.repoUrl}
+              >{lesson.repoLabel}</a
+            >
+          </div>
+          <pre><code>{lesson.codeSnippet}</code></pre>
+        </section>
+
+        <section id="practica" class="lesson-section practice-grid">
+          <article>
+            <p class="system-line">Errores comunes</p>
+            <h2>Donde suele romperse el criterio.</h2>
+            <ul>
+              {lesson.mistakes.map((mistake) => <li>{mistake}</li>)}
+            </ul>
+          </article>
+          <article>
+            <p class="system-line">Práctica</p>
+            <h2>Problemas para reconocer el patrón.</h2>
+            <ul>
+              {lesson.practice.map((problem) => <li>{problem}</li>)}
+            </ul>
+          </article>
+        </section>
+
+        <section class="lesson-closing">
+          <p>{lesson.closing}</p>
+        </section>
+
+        <nav class="lesson-pager" aria-label="Capítulos cercanos">
+          {
+            previousChapter ? (
+              <a href={previousChapter.href ?? `/courses/${course.slug}/`}>
+                <span>Anterior</span>
+                <strong>{previousChapter.title}</strong>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            nextChapter ? (
+              <a href={nextChapter.href ?? `/courses/${course.slug}/`}>
+                <span>Siguiente</span>
+                <strong>{nextChapter.title}</strong>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+        </nav>
+      </article>
+
+      <aside class="chapter-rail">
+        <nav class="chapter-card" aria-label="En este capítulo">
+          <p class="system-line">En este capítulo</p>
+          <ol>
+            {
+              chapterSections.map((section, index) => (
+                <li>
+                  <a href={section.href}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    {section.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+
+        <div class="chapter-card meta-card">
+          <p class="system-line">Estado</p>
+          <dl>
+            <div>
+              <dt>Video</dt>
+              <dd>Pendiente</dd>
+            </div>
+            <div>
+              <dt>Código</dt>
+              <dd>Disponible</dd>
+            </div>
+            <div>
+              <dt>Laboratorio</dt>
+              <dd>Primer boceto</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>
+
+<style>
+  .lesson-shell {
+    min-height: 100vh;
+    background: var(--background);
+  }
+
+  :global(.dark) .lesson-shell {
+    background:
+      linear-gradient(rgba(240, 176, 8, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240, 176, 8, 0.045) 1px, transparent 1px),
+      var(--background);
+    background-size: 36px 36px;
+  }
+
+  .lesson-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) auto auto;
+    gap: 24px;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--background) 92%, transparent);
+    padding: 14px max(20px, calc((100vw - 1420px) / 2));
+    backdrop-filter: blur(18px);
+  }
+
+  .brand-lockup,
+  .top-links,
+  .system-line,
+  .lesson-status,
+  .path-link,
+  .chapter-card,
+  .step-list span,
+  .window-rulers,
+  .letter-cell {
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    letter-spacing: 0;
+  }
+
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--foreground);
+    font-weight: 760;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+    box-shadow: inset 0 0 0 3px var(--academy-sun);
+  }
+
+  .top-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .top-links a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .top-links a:hover {
+    color: var(--foreground);
+  }
+
+  .lesson-layout {
+    width: min(1360px, calc(100% - 40px));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr) 180px;
+    gap: 16px;
+    align-items: start;
+    padding: 34px 0 78px;
+  }
+
+  .path-rail,
+  .chapter-rail {
+    position: sticky;
+    top: 86px;
+    max-height: calc(100vh - 104px);
+    overflow: auto;
+    scrollbar-color: color-mix(in srgb, var(--academy-gold) 48%, transparent)
+      transparent;
+    scrollbar-width: thin;
+  }
+
+  .path-rail::-webkit-scrollbar,
+  .chapter-rail::-webkit-scrollbar,
+  .path-list::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .path-rail::-webkit-scrollbar-thumb,
+  .chapter-rail::-webkit-scrollbar-thumb,
+  .path-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--academy-gold) 48%, transparent);
+  }
+
+  .path-card,
+  .chapter-card,
+  .lesson-hero,
+  .lesson-thesis,
+  .concept-grid article,
+  .lab-copy,
+  .window-lab,
+  .practice-grid article {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+  }
+
+  .path-card,
+  .chapter-card {
+    padding: 14px;
+  }
+
+  .course-back {
+    display: grid;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+    color: var(--foreground);
+    padding: 4px 2px 14px;
+    text-decoration: none;
+  }
+
+  .course-back span,
+  .chapter-card a span,
+  .path-link small {
+    color: var(--academy-gold);
+    font-size: 11px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .course-back strong {
+    font-size: 18px;
+    line-height: 1.1;
+  }
+
+  .path-list,
+  .chapter-card ol {
+    display: grid;
+    gap: 4px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .path-link {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--academy-readable-muted);
+    padding: 10px;
+    text-decoration: none;
+  }
+
+  .path-link > span {
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 860;
+  }
+
+  .path-link strong {
+    display: block;
+    color: var(--foreground);
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .path-link small {
+    display: block;
+    margin-top: 5px;
+    line-height: 1.25;
+  }
+
+  .path-link.is-current {
+    border-color: color-mix(in srgb, var(--academy-gold) 58%, transparent);
+    background: color-mix(in srgb, var(--academy-gold) 13%, var(--card));
+  }
+
+  .path-link.is-muted {
+    opacity: 0.7;
+  }
+
+  .lesson-content {
+    min-width: 0;
+  }
+
+  .lesson-content section[id] {
+    scroll-margin-top: 92px;
+  }
+
+  .lesson-hero {
+    padding: clamp(28px, 5vw, 54px);
+  }
+
+  .system-line {
+    margin: 0;
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .lesson-hero h1 {
+    max-width: 850px;
+    margin: 14px 0;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 0.94;
+    font-weight: 880;
+  }
+
+  .subtitle {
+    max-width: 760px;
+    margin: 0;
+    color: var(--academy-readable-muted);
+    font-size: 19px;
+    line-height: 1.58;
+  }
+
+  .lesson-status {
+    width: fit-content;
+    margin-top: 24px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--academy-gold) 16%, transparent);
+    color: var(--academy-gold);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 820;
+  }
+
+  .lesson-thesis,
+  .lesson-section,
+  .lesson-closing,
+  .lesson-pager {
+    margin-top: 22px;
+  }
+
+  .lesson-thesis {
+    display: grid;
+    gap: 12px;
+    background: var(--academy-band);
+    padding: 24px;
+  }
+
+  .lesson-thesis p:last-child {
+    max-width: 900px;
+    margin: 0;
+    color: var(--foreground);
+    font-size: clamp(24px, 3vw, 38px);
+    line-height: 1.1;
+    font-weight: 840;
+  }
+
+  .concept-grid,
+  .practice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .concept-grid article,
+  .practice-grid article,
+  .lab-copy,
+  .window-lab {
+    padding: 24px;
+  }
+
+  h2 {
+    margin: 10px 0 14px;
+    color: var(--foreground);
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1;
+    font-weight: 840;
+  }
+
+  .concept-grid p,
+  .lab-copy p,
+  .practice-grid li,
+  .lesson-closing p,
+  .step-list p {
+    color: var(--academy-readable-muted);
+    line-height: 1.58;
+  }
+
+  .lab-section {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .lab-copy span {
+    display: inline-flex;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--academy-gold) 18%, transparent);
+    color: var(--academy-gold);
+    padding: 8px 12px;
+    font-weight: 820;
+  }
+
+  .window-lab {
+    display: grid;
+    align-content: center;
+    min-height: 250px;
+    overflow: hidden;
+  }
+
+  .window-track {
+    display: grid;
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .letter-cell {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--academy-readable-muted);
+    font-size: clamp(18px, 3vw, 34px);
+    font-weight: 860;
+  }
+
+  .letter-cell.is-active {
+    border-color: color-mix(in srgb, var(--academy-gold) 76%, transparent);
+    background: color-mix(in srgb, var(--academy-gold) 22%, var(--card));
+    color: var(--foreground);
+  }
+
+  .letter-cell.is-left,
+  .letter-cell.is-right {
+    box-shadow: 0 0 0 2px var(--academy-gold);
+  }
+
+  .window-rulers {
+    position: relative;
+    height: 42px;
+    margin-top: 14px;
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 820;
+  }
+
+  .window-rulers span {
+    position: absolute;
+    left: calc((100% / 11) * var(--position));
+    transform: translateX(8px);
+  }
+
+  .pattern-section {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.64fr) minmax(0, 1.36fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .step-list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step-list li {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 16px;
+  }
+
+  .step-list span {
+    color: var(--academy-gold);
+    font-size: 13px;
+    font-weight: 860;
+  }
+
+  .step-list p {
+    margin: 0;
+  }
+
+  .code-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: end;
+    margin-bottom: 16px;
+  }
+
+  .button-primary {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--academy-ink);
+    border-radius: 999px;
+    background: var(--academy-ink);
+    color: var(--academy-sun);
+    padding: 0 18px;
+    font-size: 14px;
+    font-weight: 780;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  pre {
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--academy-terminal);
+    color: var(--academy-terminal-foreground);
+    padding: 22px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .practice-grid ul {
+    display: grid;
+    gap: 12px;
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .practice-grid li {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  .lesson-closing p {
+    margin: 0;
+    color: var(--foreground);
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.14;
+    font-weight: 820;
+  }
+
+  .lesson-pager {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .lesson-pager a {
+    display: grid;
+    gap: 6px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--foreground);
+    padding: 18px;
+    text-decoration: none;
+  }
+
+  .lesson-pager span {
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .chapter-rail {
+    display: grid;
+    gap: 14px;
+  }
+
+  .chapter-card ol {
+    gap: 8px;
+  }
+
+  .chapter-card a {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 8px;
+    align-items: baseline;
+    border-radius: 8px;
+    color: var(--foreground);
+    padding: 9px 8px;
+    text-decoration: none;
+  }
+
+  .chapter-card a:hover {
+    background: color-mix(in srgb, var(--academy-gold) 13%, transparent);
+  }
+
+  .meta-card dl {
+    display: grid;
+    gap: 10px;
+    margin: 14px 0 0;
+  }
+
+  .meta-card div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  .meta-card dt,
+  .meta-card dd {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .meta-card dt {
+    color: var(--academy-readable-muted);
+  }
+
+  .meta-card dd {
+    color: var(--academy-gold);
+    font-weight: 820;
+  }
+
+  @media (max-width: 1100px) {
+    .concept-grid,
+    .lab-section,
+    .pattern-section,
+    .practice-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .lesson-layout {
+      grid-template-columns: minmax(0, 1fr) 230px;
+    }
+
+    .path-rail {
+      position: static;
+      grid-column: 1 / -1;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .path-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 860px) {
+    .lesson-topbar,
+    .lesson-layout,
+    .concept-grid,
+    .lab-section,
+    .pattern-section,
+    .practice-grid,
+    .lesson-pager {
+      grid-template-columns: 1fr;
+    }
+
+    .chapter-rail {
+      position: static;
+      grid-row: 2;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .lesson-content {
+      grid-row: 3;
+    }
+
+    .path-list {
+      grid-template-columns: 1fr;
+      max-height: 320px;
+      overflow: auto;
+    }
+
+    .top-links {
+      grid-column: 1 / -1;
+      flex-wrap: wrap;
+      order: 3;
+    }
+
+    .code-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .lesson-topbar,
+    .lesson-layout {
+      width: auto;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .lesson-layout {
+      gap: 16px;
+      padding-top: 18px;
+    }
+
+    .lesson-hero,
+    .lesson-thesis,
+    .concept-grid article,
+    .practice-grid article,
+    .lab-copy,
+    .window-lab {
+      padding: 18px;
+    }
+
+    .lesson-hero h1 {
+      font-size: 40px;
+    }
+
+    .window-track {
+      gap: 4px;
+    }
+
+    .letter-cell {
+      border-radius: 6px;
+      font-size: 16px;
+    }
+  }
+</style>

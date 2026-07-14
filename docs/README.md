@@ -7,4 +7,7 @@ demás repositorios. Aquí, `docs/` guarda en cambio documentación técnica
 propia del sitio — decisiones de arquitectura, cómo funciona el sistema de
 temas, cómo se integra el contenido de otros repos — a medida que existan.
 
-Por ahora no hay ninguna todavía; el repo acaba de nacer (RFC-0001 §6).
+Documentos actuales:
+
+- [`visual-system.md`](./visual-system.md): dirección visual inicial del sitio,
+  themes dark/light, sistema de ilustraciones y tamaños de assets.

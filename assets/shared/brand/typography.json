@@ -1,0 +1,14 @@
+{
+  "display": {
+    "preferred": ["Bebas Neue", "Oswald", "Anton", "Archivo Black"],
+    "role": "Titulos editoriales, codigos de curso y composiciones de portada"
+  },
+  "body": {
+    "preferred": ["Inter", "IBM Plex Sans", "Source Sans 3", "Manrope"],
+    "role": "Texto secundario legible en assets con copy integrado"
+  },
+  "mono": {
+    "preferred": ["JetBrains Mono", "IBM Plex Mono", "Geist Mono"],
+    "role": "Etiquetas tecnicas, terminales, comandos y microcopy de ingenieria"
+  }
+}

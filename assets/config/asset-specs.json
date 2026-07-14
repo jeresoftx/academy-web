@@ -1,0 +1,58 @@
+{
+  "course-cover.dark.png": {
+    "width": 1600,
+    "height": 900
+  },
+  "course-cover.light.png": {
+    "width": 1600,
+    "height": 900
+  },
+  "chapter-cover.dark.png": {
+    "width": 1200,
+    "height": 675
+  },
+  "chapter-cover.light.png": {
+    "width": 1200,
+    "height": 675
+  },
+  "editorial-wide.dark.png": {
+    "width": 2560,
+    "height": 1080
+  },
+  "editorial-wide.light.png": {
+    "width": 2560,
+    "height": 1080
+  },
+  "hero-desktop.dark.png": {
+    "width": 2560,
+    "height": 1440
+  },
+  "hero-desktop.light.png": {
+    "width": 2560,
+    "height": 1440
+  },
+  "hero-mobile.dark.png": {
+    "width": 1440,
+    "height": 1800
+  },
+  "hero-mobile.light.png": {
+    "width": 1440,
+    "height": 1800
+  },
+  "og-image.dark.png": {
+    "width": 1200,
+    "height": 630
+  },
+  "og-image.light.png": {
+    "width": 1200,
+    "height": 630
+  },
+  "youtube-thumbnail.dark.png": {
+    "width": 1280,
+    "height": 720
+  },
+  "youtube-thumbnail.light.png": {
+    "width": 1280,
+    "height": 720
+  }
+}

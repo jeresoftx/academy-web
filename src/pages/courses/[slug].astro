@@ -1,0 +1,754 @@
+---
+import SiteFooter from '@/components/SiteFooter.astro';
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import { courses } from '@/data/courses';
+import Layout from '@/layouts/Layout.astro';
+
+export function getStaticPaths() {
+  return Object.values(courses).map((course) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+---
+
+<Layout
+  title={course.title}
+  description={course.description}
+  image={course.images.ogDark}
+>
+  <div class="course-shell">
+    <header class="course-nav" aria-label="Navegación del curso">
+      <a class="brand-lockup" href="/" aria-label="Jeresoft Academy">
+        <span class="brand-mark">J</span>
+        <span>Jeresoft Academy</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Secciones">
+        <a href="/">Inicio</a>
+        <a href="#capitulos">Capítulos</a>
+        <a href="#repo">Repositorio</a>
+      </nav>
+
+      <ThemeToggle client:load />
+    </header>
+
+    <main>
+      <section class="course-hero">
+        <div class="hero-media">
+          <picture class="theme-art theme-art-light">
+            <source
+              media="(max-width: 760px)"
+              srcset={course.images.heroMobileLight}
+            />
+            <img
+              src={course.images.heroDesktopLight}
+              alt={`Portada visual clara del curso ${course.title}`}
+            />
+          </picture>
+          <picture class="theme-art theme-art-dark">
+            <source
+              media="(max-width: 760px)"
+              srcset={course.images.heroMobileDark}
+            />
+            <img
+              src={course.images.heroDesktopDark}
+              alt={`Portada visual oscura del curso ${course.title}`}
+            />
+          </picture>
+        </div>
+
+        <div class="hero-panel">
+          <p class="system-line">{course.label} · {course.code}</p>
+          <h1>{course.title}</h1>
+          <p class="subtitle">{course.subtitle}</p>
+          <p class="lead">{course.description}</p>
+
+          <div class="hero-actions">
+            <a class="button-primary" href="#capitulos">Ver capítulos</a>
+            <a class="button-secondary" href={course.repoUrl}>Abrir código</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="course-band" aria-label="Estado del curso">
+        <div>
+          <p class="system-line">{course.status}</p>
+          <h2>{course.bandHeading}</h2>
+        </div>
+        <p>{course.bandText}</p>
+      </section>
+
+      <section id="capitulos" class="course-section">
+        <div class="section-heading">
+          <div>
+            <p class="system-line">{course.chaptersKicker}</p>
+            <h2>{course.chaptersHeading}</h2>
+          </div>
+          <picture class="chapter-cover theme-art-light">
+            <img
+              src={course.images.chapterCoverLight}
+              alt={`Portada clara de capítulos de ${course.title}`}
+            />
+          </picture>
+          <picture class="chapter-cover theme-art-dark">
+            <img
+              src={course.images.chapterCoverDark}
+              alt={`Portada oscura de capítulos de ${course.title}`}
+            />
+          </picture>
+        </div>
+
+        <div class="chapter-list">
+          {
+            course.chapters.map((chapter) => (
+              <article class="chapter-card">
+                <span>{chapter.number}</span>
+                <div>
+                  <p>{chapter.state}</p>
+                  <h3>
+                    {'href' in chapter ? (
+                      <a href={chapter.href}>{chapter.title}</a>
+                    ) : (
+                      chapter.title
+                    )}
+                  </h3>
+                  <p>{chapter.summary}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      {
+        'courseMap' in course && (
+          <section
+            class="course-section course-map-section"
+            aria-label="Mapa del curso"
+          >
+            <div class="section-heading map-heading">
+              <div>
+                <p class="system-line">{course.courseMap.kicker}</p>
+                <h2>Mapa del curso</h2>
+              </div>
+              <p>{course.courseMap.intro}</p>
+            </div>
+
+            <div class="map-summary">
+              <p>{course.courseMap.heading}</p>
+              <span>{course.courseMap.totalLabel}</span>
+            </div>
+
+            <div class="map-group-list">
+              {course.courseMap.groups.map((group, groupIndex) => (
+                <article class="map-group">
+                  <div class="map-group-head">
+                    <span>{String(groupIndex + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h3>{group.title}</h3>
+                      <p>{group.description}</p>
+                    </div>
+                  </div>
+
+                  <ol class="map-chapter-list">
+                    {group.chapters.map((chapter) => (
+                      <li>
+                        <span class="map-chapter-number">{chapter.number}</span>
+                        <div>
+                          <p>{chapter.state}</p>
+                          <h4>
+                            {'href' in chapter ? (
+                              <a href={chapter.href}>{chapter.title}</a>
+                            ) : (
+                              chapter.title
+                            )}
+                          </h4>
+                          <p>{chapter.summary}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </article>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section class="course-section two-column">
+        <div class="outcomes">
+          <p class="system-line">Objetivo</p>
+          <h2>{course.objectiveHeading}</h2>
+          <ul>
+            {course.outcomes.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <div id="repo" class="repo-card">
+          <p class="system-line">Repositorio</p>
+          <h2>{course.repo}</h2>
+          <p>{course.repoDescription}</p>
+          <a class="button-primary" href={course.repoUrl}>Abrir en GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>
+
+<style>
+  .course-shell {
+    min-height: 100vh;
+    background: var(--background);
+  }
+
+  :global(.dark) .course-shell {
+    background:
+      radial-gradient(
+        circle at 72% 4%,
+        rgba(217, 154, 50, 0.14),
+        transparent 32%
+      ),
+      var(--background);
+  }
+
+  .course-nav {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 24px;
+    align-items: center;
+    padding: 24px 0;
+  }
+
+  .brand-lockup,
+  .nav-links,
+  .system-line,
+  .chapter-card span,
+  .chapter-card > div > p:first-child {
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    letter-spacing: 0;
+  }
+
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--foreground);
+    font-weight: 760;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+    box-shadow: inset 0 0 0 3px var(--academy-sun);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .nav-links a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    color: var(--foreground);
+  }
+
+  .course-hero {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(480px, 1.18fr);
+    gap: 28px;
+    align-items: center;
+    padding: 64px 0 70px;
+  }
+
+  .hero-media {
+    grid-column: 2;
+    grid-row: 1;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--academy-ink);
+    box-shadow: 0 28px 80px rgba(13, 12, 9, 0.2);
+    aspect-ratio: 4 / 3;
+    min-height: 460px;
+  }
+
+  .theme-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .theme-art img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: 100% center;
+    transform: scale(1.32);
+    transform-origin: right center;
+  }
+
+  .theme-art-dark {
+    display: none;
+  }
+
+  :global(.dark) .theme-art-light {
+    display: none;
+  }
+
+  :global(.dark) .theme-art-dark {
+    display: block;
+  }
+
+  .hero-panel {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 1;
+    border: 1px solid rgba(10, 9, 7, 0.16);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 28px;
+  }
+
+  :global(.dark) .hero-panel {
+    border-color: rgba(240, 189, 100, 0.24);
+    background: var(--card);
+  }
+
+  .system-line {
+    margin: 0;
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .hero-panel h1 {
+    margin: 12px 0 4px;
+    font-size: clamp(58px, 10vw, 118px);
+    line-height: 0.88;
+    font-weight: 880;
+    letter-spacing: 0;
+  }
+
+  .subtitle {
+    margin: 0 0 18px;
+    color: var(--academy-gold);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 860;
+    line-height: 0.98;
+    text-transform: uppercase;
+  }
+
+  .lead,
+  .course-band > p,
+  .repo-card p {
+    color: var(--academy-readable-muted);
+    line-height: 1.62;
+  }
+
+  .lead {
+    margin: 0;
+    font-size: 17px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .button-primary,
+  .button-secondary {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--academy-ink);
+    border-radius: 999px;
+    padding: 0 18px;
+    font-size: 14px;
+    font-weight: 780;
+    text-decoration: none;
+  }
+
+  .button-primary {
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+  }
+
+  .button-secondary {
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+  }
+
+  :global(.dark) .button-secondary {
+    border-color: rgba(240, 189, 100, 0.22);
+  }
+
+  .course-band {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+    gap: 42px;
+    align-items: start;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--academy-band);
+    padding: 46px max(20px, calc((100vw - 1160px) / 2));
+  }
+
+  .course-band h2,
+  .section-heading h2,
+  .outcomes h2,
+  .repo-card h2 {
+    margin: 10px 0 0;
+    color: var(--foreground);
+    font-size: clamp(30px, 4vw, 56px);
+    line-height: 0.98;
+    font-weight: 840;
+    letter-spacing: 0;
+  }
+
+  .course-section {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 70px 0 0;
+  }
+
+  .section-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+    gap: 28px;
+    align-items: end;
+    margin-bottom: 22px;
+  }
+
+  .chapter-cover {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .chapter-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .chapter-card {
+    min-height: 240px;
+    display: grid;
+    align-content: space-between;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 18px;
+  }
+
+  .chapter-card span {
+    color: var(--academy-gold);
+    font-size: 13px;
+    font-weight: 860;
+  }
+
+  .chapter-card h3 {
+    margin: 8px 0 10px;
+    font-size: 21px;
+    line-height: 1.05;
+  }
+
+  .chapter-card h3 a,
+  .map-chapter-list h4 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .chapter-card h3 a:hover,
+  .map-chapter-list h4 a:hover {
+    color: var(--academy-gold);
+  }
+
+  .chapter-card p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    font-size: 14px;
+    line-height: 1.52;
+  }
+
+  .chapter-card > div > p:first-child {
+    color: var(--academy-gold);
+    font-size: 11px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .map-heading > p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    line-height: 1.62;
+  }
+
+  .map-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--academy-band);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+
+  .map-summary p {
+    max-width: 720px;
+    margin: 0;
+    color: var(--foreground);
+    font-size: 18px;
+    font-weight: 760;
+    line-height: 1.35;
+  }
+
+  .map-summary span,
+  .map-group-head > span,
+  .map-chapter-number,
+  .map-chapter-list li p:first-child {
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    letter-spacing: 0;
+  }
+
+  .map-summary span {
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 860;
+    white-space: nowrap;
+  }
+
+  .map-group-list {
+    display: grid;
+    gap: 16px;
+  }
+
+  .map-group {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    overflow: hidden;
+  }
+
+  .map-group-head {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    border-bottom: 1px solid var(--border);
+    padding: 18px;
+  }
+
+  .map-group-head > span {
+    color: var(--academy-gold);
+    font-size: 13px;
+    font-weight: 860;
+  }
+
+  .map-group-head h3 {
+    margin: 0 0 8px;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 0.98;
+  }
+
+  .map-group-head p {
+    max-width: 780px;
+    margin: 0;
+    color: var(--academy-readable-muted);
+    line-height: 1.55;
+  }
+
+  .map-chapter-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 14px;
+    list-style: none;
+  }
+
+  .map-chapter-list li {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    min-height: 150px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 16px;
+  }
+
+  .map-chapter-number {
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 860;
+  }
+
+  .map-chapter-list h4 {
+    margin: 7px 0 8px;
+    font-size: 18px;
+    line-height: 1.05;
+  }
+
+  .map-chapter-list p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    font-size: 13px;
+    line-height: 1.48;
+  }
+
+  .map-chapter-list li p:first-child {
+    color: var(--academy-gold);
+    font-size: 10px;
+    font-weight: 820;
+    text-transform: uppercase;
+  }
+
+  .two-column {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.72fr);
+    gap: 22px;
+    padding-bottom: 80px;
+  }
+
+  .outcomes,
+  .repo-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    padding: 24px;
+  }
+
+  .outcomes ul {
+    display: grid;
+    gap: 12px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .outcomes li {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    color: var(--academy-readable-muted);
+    line-height: 1.5;
+  }
+
+  .repo-card .button-primary {
+    margin-top: 18px;
+  }
+
+  @media (max-width: 980px) {
+    .course-nav,
+    .course-hero,
+    .course-band,
+    .section-heading,
+    .two-column {
+      grid-template-columns: 1fr;
+    }
+
+    .chapter-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .map-summary {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .map-chapter-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .course-nav {
+      width: min(100% - 32px, 1160px);
+      grid-template-columns: 1fr auto;
+    }
+
+    .nav-links {
+      grid-column: 1 / -1;
+      flex-wrap: wrap;
+      order: 3;
+    }
+
+    .course-hero,
+    .course-section {
+      width: min(100% - 32px, 1160px);
+    }
+
+    .course-hero {
+      padding-bottom: 34px;
+    }
+
+    .hero-media {
+      grid-column: auto;
+      grid-row: auto;
+      min-height: 430px;
+      order: 2;
+    }
+
+    .hero-panel {
+      order: 1;
+      width: auto;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .hero-media .theme-art img {
+      transform: scale(1.55);
+    }
+
+    .chapter-list {
+      grid-template-columns: 1fr;
+    }
+
+    .map-chapter-list {
+      grid-template-columns: 1fr;
+    }
+
+    .map-group-head {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

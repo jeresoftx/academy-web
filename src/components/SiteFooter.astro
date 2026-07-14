@@ -1,0 +1,345 @@
+---
+const socialLinks = [
+  {
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@jeresoft',
+    text: 'Videos, series y recorridos publicados',
+    icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-3.1-.4-4.6c-.2-.8-.9-1.5-1.7-1.7C18.4 5.3 12 5.3 12 5.3s-6.4 0-7.9.4c-.8.2-1.5.9-1.7 1.7C2 8.9 2 12 2 12s0 3.1.4 4.6c.2.8.9 1.5 1.7 1.7 1.5.4 7.9.4 7.9.4s6.4 0 7.9-.4c.8-.2 1.5-.9 1.7-1.7.4-1.5.4-4.6.4-4.6Z"/><path d="m10 15 5.2-3L10 9v6Z" class="icon-cut"/></svg>',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/jeresoft',
+    text: 'Notas profesionales y avances del proyecto',
+    icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 8.7h3.1v10.1H5.2V8.7Zm1.6-5A1.8 1.8 0 1 1 6.7 7a1.8 1.8 0 0 1 .1-3.3Zm4 5h3v1.4h.1c.4-.8 1.5-1.7 3.1-1.7 3.3 0 3.9 2.2 3.9 5v5.4h-3.1V14c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.7v4.8h-3.1V8.7Z"/></svg>',
+  },
+  {
+    label: 'X / Twitter',
+    href: 'https://x.com/jeresoft',
+    text: 'Bitácora pública y conversaciones breves',
+    icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 10.6 21.4 2h-1.8l-6.4 7.4L8.1 2H2.2l7.8 11.3L2.2 22h1.8l6.8-7.8 5.4 7.8h5.9L14 10.6Zm-2.4 2.8-.8-1.1L4.5 3.3h2.8l5 7.1.8 1.1 6.6 9.3h-2.8l-5.3-7.4Z"/></svg>',
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/jeresoftx',
+    text: 'Código abierto, manual y repositorios',
+    icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.2-3.5-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.6 2.5 1.1 3.1.9.1-.7.4-1.1.7-1.4-2.3-.3-4.7-1.1-4.7-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.6s.8-.3 2.8 1a9.5 9.5 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1a3.6 3.6 0 0 1 .1 2.6 3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.8-4.7 5 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0 0 12 2.2Z"/></svg>',
+  },
+];
+
+const academyLinks = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Algoritmos', href: '/courses/algorithms/' },
+  { label: 'Patrones de diseño', href: '/courses/design-patterns/' },
+];
+---
+
+<footer class="site-footer" aria-label="Pie de página">
+  <div class="footer-inner">
+    <section class="footer-brand" aria-label="Jeresoft Academy">
+      <a class="footer-lockup" href="/" aria-label="Ir al inicio">
+        <span class="footer-mark">J</span>
+        <span>Jeresoft Academy</span>
+      </a>
+      <p>
+        Academia abierta de ingeniería de software en español. Un proyecto de
+        legado construido con calma, código verificable y criterio humano.
+      </p>
+      <p class="footer-principle">La IA acelera; el criterio humano decide.</p>
+    </section>
+
+    <nav class="footer-column" aria-label="Redes sociales">
+      <h2>Redes</h2>
+      <ul>
+        {
+          socialLinks.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noreferrer">
+                <span class="social-title">
+                  <span class="social-icon" set:html={link.icon} />
+                  <span>{link.label}</span>
+                </span>
+                <small>{link.text}</small>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="footer-column" aria-label="Rutas de la academia">
+      <h2>Academia</h2>
+      <ul>
+        {
+          academyLinks.map((link) => (
+            <li>
+              <a href={link.href}>
+                <span>{link.label}</span>
+                <small>Ruta disponible en esta primera versión</small>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <section class="footer-column footer-governance" aria-label="Gobernanza">
+      <h2>Gobernanza</h2>
+      <p>
+        El Manual Fundacional RFC-0001 guía el contenido, el sitio, GitHub y el
+        uso de IA.
+      </p>
+      <dl>
+        <div>
+          <dt>Código</dt>
+          <dd>MIT / Apache-2.0</dd>
+        </div>
+        <div>
+          <dt>Contenido</dt>
+          <dd>CC BY-SA 4.0</dd>
+        </div>
+        <div>
+          <dt>Publicación</dt>
+          <dd>Revisión humana antes de salir a producción</dd>
+        </div>
+      </dl>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 Joel Alvarez Mexia. Todos los derechos reservados.</span>
+    <span>Construido por Jeresoft Academy.</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--academy-sun) 8%, transparent),
+        transparent 120px
+      ),
+      color-mix(in srgb, var(--background) 94%, var(--academy-ink));
+  }
+
+  :global(.dark) .site-footer {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(240, 189, 100, 0.08),
+        rgba(10, 9, 7, 0) 130px
+      ),
+      var(--background);
+  }
+
+  .footer-inner,
+  .footer-bottom {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns:
+      minmax(280px, 1.55fr) minmax(180px, 1fr) minmax(180px, 0.9fr)
+      minmax(220px, 1.05fr);
+    gap: 34px;
+    padding: 52px 0 34px;
+  }
+
+  .footer-lockup,
+  .footer-column h2,
+  .footer-column a,
+  .footer-principle,
+  .footer-governance dt,
+  .footer-bottom {
+    font-family:
+      SFMono-Regular,
+      Cascadia Code,
+      JetBrains Mono,
+      ui-monospace,
+      monospace;
+    letter-spacing: 0;
+  }
+
+  .footer-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--foreground);
+    font-weight: 820;
+    text-decoration: none;
+  }
+
+  .footer-mark {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--academy-sun);
+    background: var(--academy-ink);
+    box-shadow: inset 0 0 0 3px var(--academy-sun);
+  }
+
+  .footer-brand p,
+  .footer-governance p,
+  .footer-governance dd,
+  .footer-column small,
+  .footer-bottom {
+    color: var(--academy-readable-muted);
+  }
+
+  .footer-brand p {
+    max-width: 440px;
+    margin: 18px 0 0;
+    line-height: 1.58;
+  }
+
+  .footer-brand .footer-principle {
+    display: inline-flex;
+    width: fit-content;
+    border: 1px solid color-mix(in srgb, var(--academy-gold) 46%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--academy-sun-soft) 16%, transparent);
+    padding: 10px 12px;
+    color: var(--foreground);
+    font-size: 12px;
+    font-weight: 820;
+  }
+
+  .footer-column h2 {
+    margin: 0 0 14px;
+    color: var(--academy-gold);
+    font-size: 12px;
+    font-weight: 860;
+    text-transform: uppercase;
+  }
+
+  .footer-column ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-column a {
+    display: grid;
+    gap: 4px;
+    border-radius: 8px;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  .footer-column a:hover span {
+    color: var(--academy-gold);
+  }
+
+  .footer-column a span {
+    font-size: 13px;
+    font-weight: 820;
+  }
+
+  .social-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .social-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--academy-gold) 48%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--academy-sun-soft) 14%, transparent);
+    color: var(--academy-gold);
+  }
+
+  :global(.social-icon svg) {
+    width: 13px;
+    height: 13px;
+    display: block;
+    fill: currentColor;
+  }
+
+  :global(.social-icon .icon-cut) {
+    fill: var(--background);
+  }
+
+  .footer-column a:hover .social-icon {
+    border-color: var(--academy-gold);
+    background: color-mix(in srgb, var(--academy-sun-soft) 24%, transparent);
+    color: var(--foreground);
+  }
+
+  .footer-column small {
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .footer-governance p {
+    margin: 0;
+    line-height: 1.54;
+  }
+
+  .footer-governance dl {
+    display: grid;
+    gap: 12px;
+    margin: 18px 0 0;
+  }
+
+  .footer-governance div {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  .footer-governance dt {
+    color: var(--foreground);
+    font-size: 12px;
+    font-weight: 860;
+  }
+
+  .footer-governance dd {
+    margin: 4px 0 0;
+    font-size: 13px;
+    line-height: 1.42;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    border-top: 1px solid var(--border);
+    padding: 18px 0 28px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 980px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .footer-inner,
+    .footer-bottom {
+      width: min(100% - 32px, 1160px);
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      padding-top: 42px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+{
+  "name": "Jeresoft Academy",
+  "personality": [
+    "technical",
+    "editorial",
+    "sober",
+    "artisan",
+    "clear",
+    "premium"
+  ],
+  "palette": {
+    "deepBlack": "#0a0907",
+    "darkPanel": "#11100d",
+    "solarYellow": "#f0b008",
+    "gold": "#d99a32",
+    "warmLight": "#f0bd64",
+    "ivory": "#f5efe6"
+  },
+  "avoid": [
+    "exaggerated cyberpunk",
+    "dominant purple",
+    "dominant blue",
+    "random decoration",
+    "fake illegible UI",
+    "real brands",
+    "collages",
+    "contact sheets"
+  ]
+}

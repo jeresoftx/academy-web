@@ -1,0 +1,103 @@
+{
+  "profiles": {
+    "course-dark": {
+      "description": "Paquete inicial oscuro para curso.",
+      "files": {
+        "course-cover.dark.png": {
+          "width": 1600,
+          "height": 900,
+          "ratio": "16:9",
+          "usage": "Card principal de curso"
+        },
+        "chapter-cover.dark.png": {
+          "width": 1200,
+          "height": 675,
+          "ratio": "16:9",
+          "usage": "Card compacta de capitulo"
+        },
+        "editorial-wide.dark.png": {
+          "width": 2560,
+          "height": 1080,
+          "ratio": "21:9",
+          "usage": "Hero editorial ancho"
+        },
+        "hero-desktop.dark.png": {
+          "width": 2560,
+          "height": 1440,
+          "ratio": "16:9",
+          "usage": "Hero desktop"
+        },
+        "hero-mobile.dark.png": {
+          "width": 1440,
+          "height": 1800,
+          "ratio": "4:5",
+          "usage": "Hero movil"
+        },
+        "og-image.dark.png": {
+          "width": 1200,
+          "height": 630,
+          "ratio": "1.91:1",
+          "usage": "Open Graph"
+        }
+      }
+    },
+    "course-light": {
+      "description": "Variantes claras del paquete inicial para curso.",
+      "files": {
+        "course-cover.light.png": {
+          "width": 1600,
+          "height": 900,
+          "ratio": "16:9",
+          "usage": "Card principal de curso en light theme"
+        },
+        "chapter-cover.light.png": {
+          "width": 1200,
+          "height": 675,
+          "ratio": "16:9",
+          "usage": "Card compacta de capitulo en light theme"
+        },
+        "editorial-wide.light.png": {
+          "width": 2560,
+          "height": 1080,
+          "ratio": "21:9",
+          "usage": "Hero editorial ancho en light theme"
+        },
+        "hero-desktop.light.png": {
+          "width": 2560,
+          "height": 1440,
+          "ratio": "16:9",
+          "usage": "Hero desktop en light theme"
+        },
+        "hero-mobile.light.png": {
+          "width": 1440,
+          "height": 1800,
+          "ratio": "4:5",
+          "usage": "Hero movil en light theme"
+        },
+        "og-image.light.png": {
+          "width": 1200,
+          "height": 630,
+          "ratio": "1.91:1",
+          "usage": "Open Graph en light theme"
+        }
+      }
+    },
+    "youtube": {
+      "description": "Miniaturas de YouTube para curso o capitulo.",
+      "files": {
+        "youtube-thumbnail.dark.png": {
+          "width": 1280,
+          "height": 720,
+          "ratio": "16:9",
+          "usage": "Miniatura de YouTube en dark theme"
+        },
+        "youtube-thumbnail.light.png": {
+          "width": 1280,
+          "height": 720,
+          "ratio": "16:9",
+          "usage": "Miniatura de YouTube en light theme"
+        }
+      }
+    }
+  }
+}

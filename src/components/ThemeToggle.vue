@@ -16,6 +16,7 @@ type Theme = (typeof THEMES)[number]['value'];
 
 const STORAGE_KEY = 'academy-theme';
 const current = ref<Theme>('system');
+const isReady = ref(false);
 
 function apply(theme: Theme) {
   const resolved =
@@ -36,6 +37,7 @@ function setTheme(theme: Theme) {
 onMounted(() => {
   current.value =
     (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? 'system';
+  isReady.value = true;
 });
 </script>
 
@@ -50,6 +52,7 @@ onMounted(() => {
       :key="theme.value"
       :variant="current === theme.value ? 'default' : 'ghost'"
       size="icon"
+      :disabled="!isReady"
       :aria-pressed="current === theme.value"
       :aria-label="theme.label"
       @click="setTheme(theme.value)"

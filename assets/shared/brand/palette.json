@@ -1,0 +1,30 @@
+{
+  "name": "Jeresoft Academy",
+  "tokens": {
+    "ink": "#0a0907",
+    "panel": "#11100d",
+    "ivory": "#f5efe6",
+    "paper": "#ffffff",
+    "paperSoft": "#faf8f2",
+    "sun": "#f0b008",
+    "sunSoft": "#f6c661",
+    "gold": "#d99a32",
+    "goldSoft": "#f0bd64",
+    "muted": "#6f675b",
+    "line": "#e7dfce"
+  },
+  "dark": {
+    "background": "ink",
+    "surface": "panel",
+    "text": "ivory",
+    "accent": "sun",
+    "secondaryAccent": "gold"
+  },
+  "light": {
+    "background": "paper",
+    "surface": "paperSoft",
+    "text": "ink",
+    "accent": "sun",
+    "secondaryAccent": "gold"
+  }
+}
