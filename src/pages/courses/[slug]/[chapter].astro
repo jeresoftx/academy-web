@@ -1,5 +1,6 @@
 ---
 import SiteFooter from '@/components/SiteFooter.astro';
+import ProgressToggle from '@/components/ProgressToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import { courses } from '@/data/courses';
 import { lessons } from '@/data/lessons';
@@ -297,6 +298,13 @@ const chapterSections = [
               <dd>Primer boceto</dd>
             </div>
           </dl>
+          <div class="progress-action">
+            <ProgressToggle
+              client:load
+              courseSlug={course.slug}
+              chapterSlug={lesson.slug}
+            />
+          </div>
         </div>
       </aside>
     </main>
@@ -826,6 +834,10 @@ const chapterSections = [
     display: grid;
     gap: 10px;
     margin: 14px 0 0;
+  }
+
+  .progress-action {
+    margin-top: 14px;
   }
 
   .meta-card div {

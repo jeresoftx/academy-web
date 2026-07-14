@@ -21,12 +21,12 @@
 
 ## File Structure
 
-- [ ] Create `src/lib/progress/types.ts` for progress/auth domain types.
-- [ ] Create `src/lib/progress/local-progress.ts` for localStorage read/write.
-- [ ] Create `src/components/ProgressToggle.vue` for chapter completion controls.
+- [x] Create `src/lib/progress/types.ts` for progress/auth domain types.
+- [x] Create `src/lib/progress/local-progress.ts` for localStorage read/write.
+- [x] Create `src/components/ProgressToggle.vue` for chapter completion controls.
 - [ ] Create `src/components/GitHubAuthPrompt.vue` for the "Guardar progreso con GitHub" callout.
 - [ ] Modify `src/pages/courses/[slug]/[chapter].astro` to show progress controls and GitHub prompt.
-- [ ] Modify `tests/home.spec.ts` or create `tests/progress.spec.ts` for local progress and auth prompt behavior.
+- [x] Modify `tests/home.spec.ts` or create `tests/progress.spec.ts` for local progress and auth prompt behavior.
 - [ ] Phase 5 creates `src/pages/account.astro` for profile/progress overview.
 - [ ] Phase 3 creates backend crates or packages when Rust GraphQL enters the repo.
 - [ ] Phase 3 creates server-side models for users, progress, and badges.
@@ -42,7 +42,7 @@
 - Create: `src/lib/progress/types.ts`
 - Test: `tests/progress.spec.ts`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/progress.spec.ts` with:
 
@@ -64,7 +64,7 @@ test('un capítulo puede marcarse como completado localmente sin cuenta', async 
 });
 ```
 
-- [ ] **Step 2: Run the test and verify it fails**
+- [x] **Step 2: Run the test and verify it fails**
 
 Run:
 
@@ -74,7 +74,7 @@ pnpm test -- --grep "completado localmente"
 
 Expected: FAIL because the progress button does not exist yet.
 
-- [ ] **Step 3: Create domain types**
+- [x] **Step 3: Create domain types**
 
 Create `src/lib/progress/types.ts`:
 
@@ -96,7 +96,7 @@ export type LocalProgressSnapshot = {
 };
 ```
 
-- [ ] **Step 4: Run type check**
+- [x] **Step 4: Run type check**
 
 Run:
 
@@ -106,7 +106,7 @@ pnpm check
 
 Expected: PASS with no new errors.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/lib/progress/types.ts tests/progress.spec.ts
@@ -120,7 +120,7 @@ git commit -m "feat: define local progress contract"
 - Create: `src/lib/progress/local-progress.ts`
 - Modify: `tests/progress.spec.ts`
 
-- [ ] **Step 1: Add storage behavior expectations**
+- [x] **Step 1: Add storage behavior expectations**
 
 Extend `tests/progress.spec.ts` with:
 
@@ -142,7 +142,7 @@ test('el progreso local usa una llave estable por versión', async ({
 });
 ```
 
-- [ ] **Step 2: Run the test and verify it fails**
+- [x] **Step 2: Run the test and verify it fails**
 
 Run:
 
@@ -152,7 +152,7 @@ pnpm test -- --grep "progreso local"
 
 Expected: FAIL because the storage helper and UI do not exist yet.
 
-- [ ] **Step 3: Implement storage helper**
+- [x] **Step 3: Implement storage helper**
 
 Create `src/lib/progress/local-progress.ts`:
 
@@ -233,7 +233,7 @@ export function readChapterProgress(input: {
 }
 ```
 
-- [ ] **Step 4: Run checks**
+- [x] **Step 4: Run checks**
 
 Run:
 
@@ -244,7 +244,7 @@ pnpm test -- --grep "progreso local"
 
 Expected: `pnpm check` PASS. Test still FAIL until UI is added in Task 3.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/lib/progress/local-progress.ts tests/progress.spec.ts
@@ -259,7 +259,7 @@ git commit -m "feat: add local progress storage"
 - Modify: `src/pages/courses/[slug]/[chapter].astro`
 - Test: `tests/progress.spec.ts`
 
-- [ ] **Step 1: Create Vue component**
+- [x] **Step 1: Create Vue component**
 
 Create `src/components/ProgressToggle.vue`:
 
@@ -316,7 +316,7 @@ function toggleCompletion() {
 </style>
 ```
 
-- [ ] **Step 2: Mount button in the chapter page**
+- [x] **Step 2: Mount button in the chapter page**
 
 Modify `src/pages/courses/[slug]/[chapter].astro`:
 
@@ -334,7 +334,7 @@ import ProgressToggle from '@/components/ProgressToggle.vue';
 
 Place it in the chapter status/meta area, near the current `Estado` card.
 
-- [ ] **Step 3: Run focused tests**
+- [x] **Step 3: Run focused tests**
 
 Run:
 
@@ -344,7 +344,7 @@ pnpm test -- --grep "completado localmente|progreso local"
 
 Expected: PASS.
 
-- [ ] **Step 4: Run full checks**
+- [x] **Step 4: Run full checks**
 
 Run:
 
@@ -355,7 +355,7 @@ pnpm test
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/components/ProgressToggle.vue src/pages/courses/[slug]/[chapter].astro tests/progress.spec.ts
