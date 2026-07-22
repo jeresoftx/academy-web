@@ -15,6 +15,79 @@ test('la home carga la primera version publicable', async ({ page }) => {
     page.getByRole('link', { name: /rust-design-patterns/ }),
   ).toBeVisible();
   await expect(page.getByText('Laboratorios web')).toBeVisible();
+  await expect(
+    page.getByRole('region', { name: 'Mascota Nexo' }),
+  ).toBeVisible();
+  await expect(page.locator('.nexo-mouth')).toHaveAttribute(
+    'data-expression',
+    'admiracion',
+  );
+});
+
+test('Nexo recuerda la posición elegida en este navegador', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  const nexo = page.getByRole('region', { name: 'Mascota Nexo' });
+
+  await expect(nexo).toBeVisible();
+
+  const initial = await nexo.boundingBox();
+  expect(initial).not.toBeNull();
+
+  await page.mouse.move(
+    initial!.x + initial!.width / 2,
+    initial!.y + initial!.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(initial!.x - 96, initial!.y - 64, { steps: 6 });
+  await page.mouse.up();
+
+  const moved = await nexo.boundingBox();
+  const stored = await page.evaluate(() =>
+    JSON.parse(
+      localStorage.getItem('jeresoft-academy:nexo-position') ?? 'null',
+    ),
+  );
+
+  expect(moved).not.toBeNull();
+  expect(stored).toMatchObject({
+    relativeX: expect.any(Number),
+    relativeY: expect.any(Number),
+  });
+
+  const originalViewport = page.viewportSize();
+  expect(originalViewport).not.toBeNull();
+
+  await page.setViewportSize({
+    width: originalViewport!.width - 240,
+    height: originalViewport!.height - 120,
+  });
+
+  const resized = await nexo.boundingBox();
+  expect(resized).not.toBeNull();
+  expect(resized!.x).toBeCloseTo(
+    20 +
+      stored.relativeX * (originalViewport!.width - 240 - resized!.width - 40),
+    0,
+  );
+  expect(resized!.y).toBeCloseTo(
+    20 +
+      stored.relativeY *
+        (originalViewport!.height - 120 - resized!.height - 40),
+    0,
+  );
+
+  await page.setViewportSize(originalViewport!);
+
+  await page.reload();
+  await expect(nexo).toBeVisible();
+
+  const restored = await nexo.boundingBox();
+  expect(restored).not.toBeNull();
+  expect(restored!.x).toBeCloseTo(moved!.x, 0);
+  expect(restored!.y).toBeCloseTo(moved!.y, 0);
 });
 
 test('la home enlaza a la ruta de Algorithms', async ({ page }) => {

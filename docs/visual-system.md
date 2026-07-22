@@ -56,6 +56,95 @@ Adoptar un **sistema de ilustraciones por tema**:
 La página puede incluir ilustraciones editoriales grandes, como "Del ruido al
 criterio", pero cada curso y capítulo debe tener identidad visual propia.
 
+## Mascota animada de la academia
+
+**Estado:** dirección aprobada para exploración; nombre y arte final pendientes
+de revisión humana.
+
+### Concepto
+
+La academia contará con un compañero visual original, de nombre de trabajo
+**Nexo**: una figura mecánica modular que representa el oficio de ingeniería.
+Sus piezas se conectan, se reorganizan y se vuelven más sólidas en conjunto,
+como las ideas, interfaces y decisiones que se estudian en el camino.
+
+### Problema
+
+El sistema de ilustraciones da identidad a cursos y capítulos, pero el sitio
+necesita también una presencia continua que acompañe el avance sin convertir la
+experiencia en una interfaz infantil ni en una mascota decorativa sin función.
+
+### Alternativas consideradas
+
+1. **Sin mascota.** Mantiene el sitio más sobrio, pero pierde una presencia
+   reconocible entre recorridos, ejercicios y estados de progreso.
+2. **Personaje caricaturesco genérico.** Es rápido de producir, pero no encaja
+   con el carácter editorial y técnico de Jeresoft Academy.
+3. **Compañero mecánico modular.** Requiere más dirección de arte, pero conecta
+   directamente con construcción, criterio, composición y aprendizaje gradual.
+
+### Decisión
+
+Explorar la tercera alternativa. Nexo será una figura de silueta clara,
+construida con piezas compatibles en negro, marfil y amarillo dorado. Debe
+sentirse como un compañero de taller: preciso, tranquilo, curioso y útil; no
+como un asistente que sustituye el criterio del estudiante.
+
+No se copiarán personajes, mascotas ni rasgos distintivos de otras marcas. La
+identidad será original y compatible con el lenguaje gráfico de la academia.
+
+### Uso en el sitio
+
+La mascota acompaña, no compite con el contenido. Puede aparecer de manera
+discreta en:
+
+- el mapa de aprendizaje para señalar el siguiente recorrido;
+- la barra lateral de curso o capítulo, en tamaño contenido;
+- como compañero flotante desplazable, inicialmente en la esquina inferior
+  derecha, cuando no oculte una acción o lectura importante;
+- ejercicios y laboratorios, con estados de pensar, probar o detectar un error;
+- progreso, carga o estados vacíos, con animaciones breves;
+- confirmaciones de una verificación correcta, sin reemplazar el texto ni los
+  indicadores accesibles.
+
+No debe ocupar el hero principal, tapar texto, interrumpir lectura, usar
+movimiento continuo innecesario ni convertirse en una recompensa adictiva.
+
+La posición elegida por la persona se guarda solo en el navegador mediante
+`localStorage` como proporción del espacio disponible. Debe mantenerse dentro
+del área visible y conservar su ubicación relativa al cambiar el tamaño de la
+ventana. No se envía ni se sincroniza como dato de cuenta.
+
+### Movimiento y accesibilidad
+
+La primera exploración será 2D y tendrá cinco poses esenciales: reposo,
+atención, pensamiento, señalamiento y celebración breve. Las animaciones deben
+ser cortas, con pausas amplias y respetar `prefers-reduced-motion`; con esa
+preferencia activa se mostrará la pose estática equivalente.
+
+Como acompañante flotante, Nexo no muestra controles ni texto visible. Tras una
+pausa amplia puede ejecutar una de sus acciones de manera aleatoria; no debe
+repetir movimientos de forma continua ni reclamar atención.
+
+La boca de Nexo permite expresar admiración, risa, enojo, tristeza, miedo,
+frío, calor y cansancio. Estas expresiones son una coreografía visual con reglas
+explícitas, no una representación de conciencia, emociones reales ni autonomía
+decisoria. Nexo acompaña el aprendizaje; no simula ser una persona ni sustituye
+el criterio del estudiante.
+
+La primera implementación usa **Lottie** mediante `lottie-web`, con renderizado
+SVG dentro de una isla Vue. Se eligió sobre Rive porque el asset JSON se puede
+versionar, inspeccionar y ajustar directamente en el repositorio durante esta
+etapa de exploración. Antes de una adopción más amplia se revisarán licencia,
+peso, accesibilidad y facilidad para producir variantes.
+
+### Producción de arte
+
+Antes de producir una versión final se definirá una ficha de dirección de arte
+con silueta, paleta, personalidad, poses, storyboard y reglas de uso. El arte
+y las animaciones seguirán el flujo de producción visual de este documento y
+pasarán por revisión humana antes de entrar al sitio.
+
 ## Dirección de themes
 
 ### Dark theme
@@ -326,5 +415,7 @@ formato final; no debe convertir cada pieza en un rediseño manual desde cero.
 - Decidir si las ilustraciones finales se guardan como PNG/WebP/AVIF por tipo.
 - Regenerar prompts e imágenes desde `art-direction.md` para los cursos que aún
   no tengan arte aprobado.
+- Revisar humanamente el prototipo Lottie flotante de Nexo antes de ampliar sus
+  intervenciones en cursos, ejercicios o progreso.
 - Convertir esta dirección en componentes reales del sitio cuando se implemente
   la home.

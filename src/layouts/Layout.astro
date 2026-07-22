@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import NexoMascot from '@/components/NexoMascot.vue';
 
 interface Props {
   title: string;
@@ -48,5 +49,6 @@ const absoluteImage =
   </head>
   <body>
     <slot />
+    <NexoMascot client:load />
   </body>
 </html>

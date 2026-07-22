@@ -10,4 +10,5 @@ temas, cómo se integra el contenido de otros repos — a medida que existan.
 Documentos actuales:
 
 - [`visual-system.md`](./visual-system.md): dirección visual inicial del sitio,
-  themes dark/light, sistema de ilustraciones y tamaños de assets.
+  themes dark/light, sistema de ilustraciones, mascota animada y tamaños de
+  assets.
