@@ -58,8 +58,8 @@ criterio", pero cada curso y capítulo debe tener identidad visual propia.
 
 ## Mascota animada de la academia
 
-**Estado:** dirección aprobada para exploración; nombre y arte final pendientes
-de revisión humana.
+**Estado:** concepto de arte aprobado; ficha 2D de producción y animación final
+pendientes de revisión humana.
 
 ### Concepto
 
@@ -92,6 +92,12 @@ como un asistente que sustituye el criterio del estudiante.
 
 No se copiarán personajes, mascotas ni rasgos distintivos de otras marcas. La
 identidad será original y compatible con el lenguaje gráfico de la academia.
+
+La lámina aprobada de concepto se conserva en
+[`assets/nexo-concept-01.png`](./assets/nexo-concept-01.png). Define una cabeza
+con visor redondeado, antena con dos nodos conectados, piezas de grafito mate,
+un núcleo dorado y extremidades compactas. Es una referencia de materialidad y
+caracterización; no se carga en la experiencia de las personas visitantes.
 
 ### Uso en el sitio
 
@@ -131,6 +137,12 @@ frío, calor y cansancio. Estas expresiones son una coreografía visual con regl
 explícitas, no una representación de conciencia, emociones reales ni autonomía
 decisoria. Nexo acompaña el aprendizaje; no simula ser una persona ni sustituye
 el criterio del estudiante.
+
+El núcleo circular de su torso actúa como una señal breve de la acción visual.
+Usa iconos vectoriales internos para ramificación, destello, aviso, lluvia,
+mirada, frío, calor y descanso. Esta capa se mantiene independiente del cuerpo
+para animarla en Rive más adelante, sin duplicar assets ni descargar imágenes
+por cada estado.
 
 La primera implementación usa **Lottie** mediante `lottie-web`, con renderizado
 SVG dentro de una isla Vue. Se eligió sobre Rive porque el asset JSON se puede
