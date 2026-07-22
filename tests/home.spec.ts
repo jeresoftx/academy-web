@@ -22,6 +22,10 @@ test('la home carga la primera version publicable', async ({ page }) => {
     'data-expression',
     'admiracion',
   );
+  await expect(page.locator('.nexo-core')).toHaveAttribute(
+    'data-icon',
+    'branch',
+  );
 });
 
 test('Nexo recuerda la posición elegida en este navegador', async ({

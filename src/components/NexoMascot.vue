@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import type { AnimationItem } from 'lottie-web';
+import {
+  CloudRain,
+  Eye,
+  GitBranch,
+  MoonStar,
+  Snowflake,
+  Sparkles,
+  SunMedium,
+  TriangleAlert,
+} from '@lucide/vue';
 import animationData from '@/animations/nexo.json';
 
 const STATES = [
@@ -22,15 +32,26 @@ const EXPRESSIONS = [
   'cansancio',
 ] as const;
 
+const CORE_ICONS = [
+  'branch',
+  'sparkles',
+  'alert',
+  'rain',
+  'eye',
+  'snowflake',
+  'sun',
+  'moon',
+] as const;
+
 const AMBIENT_ACTIONS = [
-  { state: 'attention', expression: 'admiracion' },
-  { state: 'celebrating', expression: 'risa' },
-  { state: 'pointing', expression: 'enojo' },
-  { state: 'idle', expression: 'tristeza' },
-  { state: 'attention', expression: 'miedo' },
-  { state: 'thinking', expression: 'frio' },
-  { state: 'celebrating', expression: 'calor' },
-  { state: 'idle', expression: 'cansancio' },
+  { state: 'attention', expression: 'admiracion', coreIcon: 'sparkles' },
+  { state: 'celebrating', expression: 'risa', coreIcon: 'sparkles' },
+  { state: 'pointing', expression: 'enojo', coreIcon: 'alert' },
+  { state: 'idle', expression: 'tristeza', coreIcon: 'rain' },
+  { state: 'attention', expression: 'miedo', coreIcon: 'eye' },
+  { state: 'thinking', expression: 'frio', coreIcon: 'snowflake' },
+  { state: 'celebrating', expression: 'calor', coreIcon: 'sun' },
+  { state: 'idle', expression: 'cansancio', coreIcon: 'moon' },
 ] as const;
 
 const POSITION_KEY = 'jeresoft-academy:nexo-position';
@@ -41,6 +62,7 @@ const MAX_ACTION_DELAY = 18_000;
 
 type NexoState = (typeof STATES)[number]['key'];
 type NexoExpression = (typeof EXPRESSIONS)[number];
+type NexoCoreIcon = (typeof CORE_ICONS)[number];
 
 interface Position {
   x: number;
@@ -61,6 +83,7 @@ const container = ref<HTMLDivElement | null>(null);
 const widget = ref<HTMLElement | null>(null);
 const currentState = ref<NexoState>('thinking');
 const expression = ref<NexoExpression>('admiracion');
+const coreIcon = ref<NexoCoreIcon>('branch');
 const position = ref<Position>({ x: 0, y: 0 });
 const relativePosition = ref<RelativePosition>({ x: 1, y: 1 });
 const isDragging = ref(false);
@@ -82,9 +105,14 @@ function segmentFor(state: NexoState) {
   return STATES.find((item) => item.key === state)?.segment ?? [0, 59];
 }
 
-function play(state: NexoState, nextExpression = expression.value) {
+function play(
+  state: NexoState,
+  nextExpression = expression.value,
+  nextCoreIcon = coreIcon.value,
+) {
   currentState.value = state;
   expression.value = nextExpression;
+  coreIcon.value = nextCoreIcon;
 
   if (!animation) {
     return;
@@ -128,7 +156,7 @@ function scheduleAction() {
     const nextAction =
       availableActions[Math.floor(Math.random() * availableActions.length)];
 
-    play(nextAction.state, nextAction.expression);
+    play(nextAction.state, nextAction.expression, nextAction.coreIcon);
     scheduleAction();
   }, delay);
 }
@@ -345,6 +373,16 @@ onBeforeUnmount(() => {
     <div class="nexo-stage" aria-hidden="true">
       <div ref="container" class="nexo-animation" />
       <span class="nexo-mouth" :data-expression="expression" />
+      <span :key="coreIcon" class="nexo-core" :data-icon="coreIcon">
+        <GitBranch v-if="coreIcon === 'branch'" />
+        <Sparkles v-else-if="coreIcon === 'sparkles'" />
+        <TriangleAlert v-else-if="coreIcon === 'alert'" />
+        <CloudRain v-else-if="coreIcon === 'rain'" />
+        <Eye v-else-if="coreIcon === 'eye'" />
+        <Snowflake v-else-if="coreIcon === 'snowflake'" />
+        <SunMedium v-else-if="coreIcon === 'sun'" />
+        <MoonStar v-else />
+      </span>
     </div>
   </aside>
 </template>
@@ -459,6 +497,54 @@ onBeforeUnmount(() => {
   border: 0;
   border-radius: 3px;
   background: var(--academy-sun);
+}
+
+.nexo-core {
+  position: absolute;
+  top: 64%;
+  left: 50%;
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--academy-sun) 72%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--academy-sun) 20%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--academy-ink) 72%, transparent),
+    0 0 12px color-mix(in srgb, var(--academy-sun) 42%, transparent);
+  color: var(--academy-sun);
+  transform: translate(-50%, -50%);
+  animation: core-signal 420ms ease-out;
+}
+
+.nexo-core :deep(svg) {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.35;
+}
+
+@keyframes core-signal {
+  0% {
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scale(0.65);
+  }
+
+  62% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.13);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexo-core {
+    animation: none;
+  }
 }
 
 @media (max-width: 560px) {

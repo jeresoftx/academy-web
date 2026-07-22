@@ -32,3 +32,6 @@ pnpm-debug.log*
 
 # generated asset bundles
 assets/packages/*.zip
+
+# Local agent working notes
+.superpowers/
