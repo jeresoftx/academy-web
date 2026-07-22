@@ -12,3 +12,5 @@ Documentos actuales:
 - [`visual-system.md`](./visual-system.md): dirección visual inicial del sitio,
   themes dark/light, sistema de ilustraciones, mascota animada y tamaños de
   assets.
+- [`nexo-production.md`](./nexo-production.md): ficha 2D de producción de
+  Nexo, con capas, paleta, estados y criterios para una futura animación Rive.
