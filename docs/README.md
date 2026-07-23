@@ -23,6 +23,9 @@ Documentos actuales:
 - [`nexo-voice-opt-in-design.md`](./nexo-voice-opt-in-design.md): diseño de
   voz opt-in, push-to-talk, transcripción visible, respaldo textual y separación
   entre Whisper y TTS.
+- [`nexo-retrieval-sources-and-opensearch.md`](./nexo-retrieval-sources-and-opensearch.md):
+  política de recuperación con fuentes, fragmentación, citas, umbrales para
+  evaluar OpenSearch y límites de búsqueda híbrida.
 - [`nexo-3d/model-sheet.md`](./nexo-3d/model-sheet.md): biblia de modelo para
   reconstruir Nexo con fidelidad, despiece, niveles de detalle y criterios de
   revisión humana.
