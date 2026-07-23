@@ -132,6 +132,12 @@ Reglas del esquema:
 
 ## Flujo de búsqueda
 
+La implementación inicial vive en `src/lib/nexo/navigation.ts` y en la ruta
+`/search/`. El registro de navegación se deriva de `src/data/courses.ts` y
+`src/data/lessons.ts`; no se mantiene una copia manual de cursos o capítulos
+dentro de Nexo. Las consultas se normalizan, se sanitizan para construir
+parámetros visibles y se resuelven contra rutas locales antes de mostrarse.
+
 ```mermaid
 flowchart TD
     Input["Entrada: texto, click o voz opt-in"]
