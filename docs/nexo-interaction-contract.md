@@ -185,3 +185,6 @@ flowchart TD
 Este contrato no implementa Whisper, TTS, modelo local, OpenSearch ni búsqueda
 híbrida. Esas decisiones viven en issues posteriores del milestone
 `Nexo — Biblioteca, conversación y voz`.
+
+La primera evaluación de conversación local queda documentada por separado en
+[`nexo-local-conversation-evaluation.md`](./nexo-local-conversation-evaluation.md).

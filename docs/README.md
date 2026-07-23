@@ -17,6 +17,9 @@ Documentos actuales:
 - [`nexo-interaction-contract.md`](./nexo-interaction-contract.md): contrato
   de interacción, navegación, accesibilidad y acciones permitidas para Nexo
   bibliotecario.
+- [`nexo-local-conversation-evaluation.md`](./nexo-local-conversation-evaluation.md):
+  evaluación de conversación local, límites operativos, benchmark reproducible y
+  criterios para decidir si Nexo puede usar un modelo local en el futuro.
 - [`nexo-3d/model-sheet.md`](./nexo-3d/model-sheet.md): biblia de modelo para
   reconstruir Nexo con fidelidad, despiece, niveles de detalle y criterios de
   revisión humana.
