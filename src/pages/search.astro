@@ -1,0 +1,277 @@
+---
+import SiteFooter from '@/components/SiteFooter.astro';
+import NexoSearch from '@/components/NexoSearch.vue';
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout
+  title="Búsqueda"
+  description="Búsqueda local de cursos y capítulos publicados en Jeresoft Academy."
+>
+  <div class="search-shell">
+    <header class="search-topbar" aria-label="Navegación de búsqueda">
+      <a class="brand-lockup" href="/" aria-label="Jeresoft Academy">
+        <span class="brand-mark">J</span>
+        <span>Jeresoft Academy</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Secciones principales">
+        <a href="/">Inicio</a>
+        <a href="/#rutas">Rutas</a>
+        <a href="/#metodo">Método</a>
+      </nav>
+
+      <ThemeToggle client:load />
+    </header>
+
+    <main class="search-main">
+      <section class="search-hero">
+        <p class="system-line">Nexo bibliotecario · búsqueda local</p>
+        <h1>Búsqueda en Jeresoft Academy</h1>
+        <p>
+          La primera versión busca solo en cursos y capítulos publicados. Si no
+          hay una ruta exacta, Nexo conserva la consulta visible y ofrece
+          resultados verificables.
+        </p>
+
+        <NexoSearch client:load />
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>
+
+<style>
+  .search-shell {
+    min-height: 100vh;
+    background: var(--background);
+  }
+
+  :global(.dark) .search-shell {
+    background:
+      radial-gradient(
+        circle at 80% 0%,
+        rgba(217, 154, 50, 0.14),
+        transparent 30%
+      ),
+      var(--background);
+  }
+
+  .search-topbar,
+  .search-main {
+    width: min(1060px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .search-topbar {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 24px;
+    align-items: center;
+    padding: 24px 0;
+  }
+
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--foreground);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--academy-sun);
+    color: var(--academy-ink);
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--muted-foreground);
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    color: var(--foreground);
+  }
+
+  .search-main {
+    padding: 52px 0 80px;
+  }
+
+  .search-hero {
+    display: grid;
+    gap: 22px;
+    max-width: 760px;
+  }
+
+  .system-line {
+    margin: 0;
+    color: var(--academy-gold);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .search-hero h1 {
+    margin: 0;
+    color: var(--foreground);
+    font-size: clamp(2.5rem, 6vw, 5.2rem);
+    line-height: 0.95;
+    letter-spacing: 0;
+  }
+
+  .search-hero p,
+  .empty-state p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+
+  .search-form {
+    display: grid;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .search-form label {
+    color: var(--foreground);
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .search-form div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
+
+  .search-form input,
+  .search-form button {
+    min-height: 50px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    font: inherit;
+  }
+
+  .search-form input {
+    min-width: 0;
+    padding: 0 16px;
+    background: var(--card);
+    color: var(--foreground);
+  }
+
+  .search-form button {
+    padding: 0 22px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .results-section {
+    display: grid;
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .results-heading {
+    display: grid;
+    gap: 8px;
+  }
+
+  .results-heading h2,
+  .empty-state h2 {
+    margin: 0;
+    color: var(--foreground);
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .result-list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .result-list a,
+  .empty-state {
+    display: grid;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  .result-list a {
+    padding: 18px;
+  }
+
+  .result-list a:hover {
+    border-color: var(--ring);
+  }
+
+  .result-list span {
+    color: var(--academy-gold);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .result-list strong {
+    color: var(--foreground);
+    font-size: 1.2rem;
+    line-height: 1.25;
+  }
+
+  .result-list p {
+    margin: 0;
+    color: var(--academy-readable-muted);
+    line-height: 1.6;
+  }
+
+  .empty-state {
+    padding: 24px;
+  }
+
+  @media (max-width: 760px) {
+    .search-topbar {
+      grid-template-columns: 1fr auto;
+    }
+
+    .nav-links {
+      grid-column: 1 / -1;
+    }
+
+    .search-form div {
+      grid-template-columns: 1fr;
+    }
+
+    .search-form button {
+      width: 100%;
+    }
+  }
+</style>
