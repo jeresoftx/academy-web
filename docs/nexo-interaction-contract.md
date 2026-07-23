@@ -188,3 +188,5 @@ híbrida. Esas decisiones viven en issues posteriores del milestone
 
 La primera evaluación de conversación local queda documentada por separado en
 [`nexo-local-conversation-evaluation.md`](./nexo-local-conversation-evaluation.md).
+El diseño inicial de voz opt-in vive en
+[`nexo-voice-opt-in-design.md`](./nexo-voice-opt-in-design.md).

@@ -20,6 +20,9 @@ Documentos actuales:
 - [`nexo-local-conversation-evaluation.md`](./nexo-local-conversation-evaluation.md):
   evaluación de conversación local, límites operativos, benchmark reproducible y
   criterios para decidir si Nexo puede usar un modelo local en el futuro.
+- [`nexo-voice-opt-in-design.md`](./nexo-voice-opt-in-design.md): diseño de
+  voz opt-in, push-to-talk, transcripción visible, respaldo textual y separación
+  entre Whisper y TTS.
 - [`nexo-3d/model-sheet.md`](./nexo-3d/model-sheet.md): biblia de modelo para
   reconstruir Nexo con fidelidad, despiece, niveles de detalle y criterios de
   revisión humana.
