@@ -1,0 +1,303 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 256 256"
+  fill="none"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Nexo, mascota de Jeresoft Academy</title>
+  <desc id="description">
+    Robot modular con visor, nucleo dorado y antena de dos nodos.
+  </desc>
+  <defs>
+    <linearGradient
+      id="graphite"
+      x1="56"
+      y1="36"
+      x2="202"
+      y2="223"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#3B3731" />
+      <stop offset="0.52" stop-color="#27241F" />
+      <stop offset="1" stop-color="#171510" />
+    </linearGradient>
+    <linearGradient
+      id="metal"
+      x1="76"
+      y1="54"
+      x2="178"
+      y2="198"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#F5EFE6" stop-opacity="0.42" />
+      <stop offset="0.3" stop-color="#777067" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#0A0907" stop-opacity="0.42" />
+    </linearGradient>
+    <radialGradient
+      id="core"
+      cx="0"
+      cy="0"
+      r="1"
+      gradientTransform="translate(128 166) rotate(90) scale(20)"
+    >
+      <stop stop-color="#FFF5B4" />
+      <stop offset="0.45" stop-color="#FFD21A" />
+      <stop offset="1" stop-color="#D99A32" />
+    </radialGradient>
+  </defs>
+
+  <g id="nexo-shadow" opacity="0.32">
+    <ellipse cx="128" cy="235" rx="72" ry="10" fill="#0A0907" />
+  </g>
+
+  <g id="nexo-antenna" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M126 38V25L106 14" stroke="#D99A32" stroke-width="5" />
+    <path d="M130 38V25L150 14" stroke="#D99A32" stroke-width="5" />
+    <circle
+      id="nexo-antenna-left"
+      cx="102"
+      cy="13"
+      r="10"
+      fill="#27241F"
+      stroke="#FFD21A"
+      stroke-width="3"
+    />
+    <circle cx="102" cy="13" r="4" fill="#FFD21A" />
+    <circle
+      id="nexo-antenna-right"
+      cx="154"
+      cy="13"
+      r="10"
+      fill="#27241F"
+      stroke="#FFD21A"
+      stroke-width="3"
+    />
+    <circle cx="154" cy="13" r="4" fill="#FFD21A" />
+  </g>
+
+  <g id="nexo-head">
+    <rect
+      x="43"
+      y="36"
+      width="170"
+      height="96"
+      rx="45"
+      fill="url(#graphite)"
+      stroke="#0A0907"
+      stroke-width="5"
+    />
+    <path
+      d="M64 67C70 50 89 42 112 42H160C182 42 198 52 204 67"
+      stroke="#F5EFE6"
+      stroke-opacity="0.24"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+    <circle
+      cx="49"
+      cy="84"
+      r="11"
+      fill="#171510"
+      stroke="#D99A32"
+      stroke-width="3"
+    />
+    <circle
+      cx="207"
+      cy="84"
+      r="11"
+      fill="#171510"
+      stroke="#D99A32"
+      stroke-width="3"
+    />
+  </g>
+
+  <g id="nexo-visor">
+    <rect
+      x="56"
+      y="50"
+      width="144"
+      height="68"
+      rx="29"
+      fill="#0A0907"
+      stroke="#625B51"
+      stroke-width="3"
+    />
+    <path
+      d="M71 63C83 55 95 55 107 55H157"
+      stroke="#F5EFE6"
+      stroke-opacity="0.12"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <g
+    id="nexo-face"
+    stroke="#FFD21A"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <g id="nexo-brows" stroke-width="4">
+      <path id="nexo-brow-left" d="M86 72L101 68" />
+      <path id="nexo-brow-right" d="M155 68L170 72" />
+    </g>
+    <g id="nexo-eyes" fill="#FFD21A" stroke="none">
+      <rect id="nexo-eye-left" x="84" y="78" width="18" height="24" rx="9" />
+      <rect id="nexo-eye-right" x="154" y="78" width="18" height="24" rx="9" />
+    </g>
+    <path
+      id="nexo-mouth"
+      d="M112 104C121 112 135 112 144 104"
+      stroke-width="4"
+    />
+  </g>
+
+  <g id="nexo-torso">
+    <path
+      d="M82 128C82 118 90 112 100 112H156C166 112 174 118 174 128V190C174 202 164 210 152 210H104C92 210 82 202 82 190V128Z"
+      fill="url(#graphite)"
+      stroke="#0A0907"
+      stroke-width="5"
+    />
+    <path
+      d="M96 126C102 120 111 118 121 118H145C154 118 162 121 166 128"
+      stroke="#F5EFE6"
+      stroke-opacity="0.2"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+    <rect
+      x="96"
+      y="139"
+      width="64"
+      height="52"
+      rx="21"
+      fill="url(#metal)"
+      stroke="#554D43"
+      stroke-width="2"
+    />
+  </g>
+
+  <g id="nexo-core">
+    <circle
+      id="nexo-core-ring"
+      cx="128"
+      cy="166"
+      r="23"
+      fill="#171510"
+      stroke="#D99A32"
+      stroke-width="4"
+    />
+    <circle id="nexo-core-light" cx="128" cy="166" r="17" fill="url(#core)" />
+    <g
+      id="nexo-core-glyph"
+      stroke="#0A0907"
+      stroke-width="2.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M119 173L128 165L137 170" />
+      <path d="M128 165V156" />
+      <circle cx="119" cy="173" r="2.5" fill="#0A0907" stroke="none" />
+      <circle cx="128" cy="156" r="2.5" fill="#0A0907" stroke="none" />
+      <circle cx="137" cy="170" r="2.5" fill="#0A0907" stroke="none" />
+    </g>
+  </g>
+
+  <g id="nexo-arm-left" stroke-linecap="round" stroke-linejoin="round">
+    <circle
+      cx="82"
+      cy="139"
+      r="13"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="4"
+    />
+    <path d="M74 147L56 166L64 181" stroke="url(#graphite)" stroke-width="16" />
+    <circle
+      cx="56"
+      cy="166"
+      r="9"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="4"
+    />
+    <path d="M64 181L54 193" stroke="url(#graphite)" stroke-width="14" />
+    <path
+      id="nexo-hand-left"
+      d="M50 194L43 202M53 197L48 207M57 198L56 208"
+      stroke="#27241F"
+      stroke-width="5"
+    />
+  </g>
+
+  <g id="nexo-arm-right" stroke-linecap="round" stroke-linejoin="round">
+    <circle
+      cx="174"
+      cy="139"
+      r="13"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="4"
+    />
+    <path
+      d="M182 147L200 166L192 181"
+      stroke="url(#graphite)"
+      stroke-width="16"
+    />
+    <circle
+      cx="200"
+      cy="166"
+      r="9"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="4"
+    />
+    <path d="M192 181L202 193" stroke="url(#graphite)" stroke-width="14" />
+    <path
+      id="nexo-hand-right"
+      d="M206 194L213 202M203 197L208 207M199 198L200 208"
+      stroke="#27241F"
+      stroke-width="5"
+    />
+  </g>
+
+  <g id="nexo-leg-left" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M108 207V220L100 230" stroke="url(#graphite)" stroke-width="17" />
+    <circle
+      cx="108"
+      cy="220"
+      r="8"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="3"
+    />
+    <path
+      id="nexo-foot-left"
+      d="M100 230H82C78 230 76 234 79 238H104C108 238 109 233 106 230H100Z"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="3"
+    />
+  </g>
+
+  <g id="nexo-leg-right" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M148 207V220L156 230" stroke="url(#graphite)" stroke-width="17" />
+    <circle
+      cx="148"
+      cy="220"
+      r="8"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="3"
+    />
+    <path
+      id="nexo-foot-right"
+      d="M156 230H174C178 230 180 234 177 238H152C148 238 147 233 150 230H156Z"
+      fill="#27241F"
+      stroke="#0A0907"
+      stroke-width="3"
+    />
+  </g>
+</svg>
