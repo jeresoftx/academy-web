@@ -14,6 +14,9 @@ Documentos actuales:
   assets.
 - [`nexo-production.md`](./nexo-production.md): ficha 2D de producción de
   Nexo, con capas, paleta, estados y criterios para una futura animación Rive.
+- [`nexo-interaction-contract.md`](./nexo-interaction-contract.md): contrato
+  de interacción, navegación, accesibilidad y acciones permitidas para Nexo
+  bibliotecario.
 - [`nexo-3d/model-sheet.md`](./nexo-3d/model-sheet.md): biblia de modelo para
   reconstruir Nexo con fidelidad, despiece, niveles de detalle y criterios de
   revisión humana.
