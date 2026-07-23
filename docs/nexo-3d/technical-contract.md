@@ -1,194 +1,162 @@
-# Contrato técnico: Blender a GLB para Nexo 3D
+# Contrato técnico: modelo maestro y derivado web de Nexo
 
-**Estado:** propuesta de producción; requiere revisión humana antes de iniciar el
-blockout.
+**Estado:** propuesta de producción v2; requiere revisión humana antes de
+crear la fuente maestra.
 
-**Trazabilidad:** [issue #11](https://github.com/jeresoftx/academy-web/issues/11)
-del Project de Nexo. Complementa la
-[ficha canónica de modelado](./model-sheet.md): aquella define qué es Nexo;
-este documento define cómo se produce y entrega sin dañar la experiencia web.
-
-## Concepto
-
-El modelo de Nexo debe ser un asset de tiempo real: una sola fuente editable en
-Blender produce un archivo GLB optimizado, animable y verificable para una isla
-Vue. El modelo no es una escena de cine ni un render estático; debe conservar
-el carácter editorial dentro de un presupuesto que permita cargarlo de forma
-opcional en el sitio.
-
-## Problema
-
-Un archivo `.blend` puede contener cámaras, luces, modificadores, texturas y
-geometría útiles para el trabajo artístico, pero innecesarios o incompatibles
-para web. Sin convenciones, las animaciones se rompen, el peso aumenta y cada
-exportación obliga a adivinar qué se debe conservar.
-
-## Alternativas
-
-1. Modelar libremente y resolver el export al final.
-2. Exportar la escena completa con sus ayudas de producción.
-3. Definir colecciones, nombres, presupuesto y validaciones antes de modelar.
+**Trazabilidad:** [issue #27](https://github.com/jeresoftx/academy-web/issues/27).
+Complementa la [biblia de modelo](./model-sheet.md): aquella define qué se
+construye; este contrato separa cómo se conserva la calidad maestra y cómo se
+deriva una entrega responsable para la web.
 
 ## Decisión
 
-Se adopta la tercera alternativa. Blender conserva la fuente de producción;
-`nexo.glb` es el único artefacto 3D que consume el sitio. La exportación se
-prueba antes de integrarse y siempre existe un respaldo estático para visitantes
-sin WebGL o con movimiento reducido.
+Nexo tendrá dos entregables distintos:
+
+1. **Modelo maestro:** fuente Blender de alta fidelidad para renders,
+   comparaciones artísticas, texturas y rig.
+2. **Derivado web:** malla optimizada, UV y mapas horneados que se exportan a
+   GLB. Nunca es la fuente de verdad del diseño.
+
+Un límite de runtime no autoriza degradar el maestro. Una mejora del maestro no
+se publica hasta que su derivado web se mida y se apruebe de forma independiente.
 
 ## Estructura de archivos
 
 ```text
 assets/mascot/nexo-3d/
 ├── source/
-│   └── nexo-v1.blend              # Fuente editable de Blender
+│   ├── nexo-v1.blend                 # Exploración actual; no canónica
+│   ├── nexo-master-v1.blend          # Fuente maestra aprobada
+│   └── nexo-web-v1.blend             # Retopología y horneado derivados
 ├── reference/
-│   └── README.md                  # Procedencia de las láminas aprobadas
+│   ├── README.md                     # Procedencia y prioridad de láminas
+│   └── nexo-orthographic-v1.*        # Guías aprobadas de frente/perfil/reverso
+├── textures/
+│   ├── master/                       # Fuentes PBR de máxima resolución
+│   └── web/                          # Mapas derivados y comprimidos
 └── exports/
-    └── nexo-review.glb            # Export de revisión, no consumido por la web
+    ├── review/                       # Renders y GLB de revisión, no publicados
+    └── nexo-web-v1.glb               # Candidato a entrega de runtime
 
 public/assets/mascot/
-├── nexo.glb                       # Entrega optimizada para runtime
-└── nexo-static.webp               # Respaldo estático con transparencia
+├── nexo.glb                          # Entrega web aprobada
+└── nexo-static.webp                  # Respaldo estático con transparencia
 ```
 
-El archivo `.blend` se conserva como fuente de trabajo. No se reemplaza con un
-GLB ni se edita directamente después de una exportación. Si el archivo fuente
-supera un tamaño que Git pueda manejar cómodamente, se propone una estrategia
-de almacenamiento antes de agregar Git LFS u otro servicio.
-
-## Escala y orientación
-
-- Unidad de escena: métrica, escala `1.0`.
-- Altura canónica de Nexo, incluyendo antena: `1.00 m`.
-- El origen del personaje está centrado entre los pies, sobre el plano de
-  suelo. No se coloca en el centro de la cabeza ni dentro del torso.
-- Las transformaciones de objetos exportables deben aplicarse: ubicación,
-  rotación y escala coherentes antes de rig y exportación.
-- El frente se valida visualmente en Blender y en un visor GLB de destino; no
-  se compensan ejes con rotaciones ocultas dentro de la isla web.
-
-La escala física no implica que Nexo se muestre a tamaño real en pantalla. Solo
-normaliza luz, cámara, rig y exportación.
+El archivo `nexo-v1.blend` ya creado se conserva como exploración. No se
+renombra, modifica ni incorpora al export final sin una revisión explícita.
 
 ## Colecciones de Blender
 
-| Colección      | Contenido                                  | ¿Se exporta?                               |
-| -------------- | ------------------------------------------ | ------------------------------------------ |
-| `REF_NEXO`     | Láminas de referencia y guías visuales     | No                                         |
-| `GEO_NEXO`     | Malla final visible y sus piezas           | Sí                                         |
-| `RIG_NEXO`     | Armature y huesos de deformación           | Sí                                         |
-| `CTRL_NEXO`    | Controles artísticos, guías e IK           | No, salvo huesos de deformación necesarios |
-| `LOOKDEV_NEXO` | Luces, cámara y suelo de revisión          | No                                         |
-| `EXPORT_NEXO`  | Colección temporal que reúne lo exportable | Sí                                         |
+| Colección      | Contenido                                   | Exportación                    |
+| -------------- | ------------------------------------------- | ------------------------------ |
+| `REF_NEXO`     | Láminas y guías ortográficas                | Nunca                          |
+| `BLK_NEXO`     | Blockout revisable                          | Nunca                          |
+| `HIG_NEXO`     | Modelo maestro de alta fidelidad            | Renders de revisión únicamente |
+| `LOW_NEXO`     | Malla retopologizada para web               | Sí, mediante `EXPORT_NEXO`     |
+| `RIG_NEXO`     | Armature de deformación                     | Sí, para el derivado web       |
+| `CTRL_NEXO`    | Controles IK, guías y helpers               | Nunca                          |
+| `LOOKDEV_NEXO` | Cámaras, luces y suelo de comparación       | Nunca                          |
+| `EXPORT_NEXO`  | Solo mallas, materiales, rig y acciones web | Sí                             |
 
-Solo `EXPORT_NEXO` participa en el export. Esta separación evita incluir por
-accidente referencias, ayudas de rig, cámaras o luces de trabajo.
+Una colección no se usa como sustituto de otra. En particular, `HIG_NEXO` no
+se exporta por accidente como GLB.
 
 ## Convención de nombres
 
-Los nombres son estables, en minúsculas y `snake_case`. No se usa `Cube.001`,
-`Armature.002` ni nombres dependientes de idioma en objetos técnicos.
+Los identificadores usan minúsculas y `snake_case`.
 
-| Tipo                 | Patrón                | Ejemplos                                     |
-| -------------------- | --------------------- | -------------------------------------------- |
-| Malla                | `nexo_<pieza>`        | `nexo_head_shell`, `nexo_visor`, `nexo_core` |
-| Material             | `mat_nexo_<rol>`      | `mat_nexo_graphite`, `mat_nexo_gold`         |
-| Hueso de deformación | `def_<lado>_<pieza>`  | `def_l_upper_arm`, `def_r_foot`              |
-| Control de rig       | `ctrl_<lado>_<pieza>` | `ctrl_l_hand`, `ctrl_head`                   |
-| Acción               | `nexo_<accion>`       | `nexo_idle`, `nexo_wave`                     |
-| Export               | `nexo.glb`            | Entrega de runtime                           |
+| Tipo             | Patrón                | Ejemplo                  |
+| ---------------- | --------------------- | ------------------------ |
+| Malla maestra    | `nexo_<pieza>_high`   | `nexo_visor_bezel_high`  |
+| Malla web        | `nexo_<pieza>_low`    | `nexo_visor_bezel_low`   |
+| Material maestro | `mat_nexo_<rol>_high` | `mat_nexo_graphite_high` |
+| Material web     | `mat_nexo_<rol>_web`  | `mat_nexo_graphite_web`  |
+| Mapa horneado    | `nexo_<pieza>_<tipo>` | `nexo_head_shell_normal` |
+| Hueso            | `def_<lado>_<pieza>`  | `def_l_forearm`          |
+| Control          | `ctrl_<lado>_<pieza>` | `ctrl_r_hand`            |
+| Acción           | `nexo_<accion>`       | `nexo_think`             |
 
-Los lados usan `l` y `r`; el centro usa `c`. La cara, boca, cejas y núcleo se
-nombran de forma independiente para permitir futuras expresiones sin romper la
-anatomía base.
+Los lados son `l` y `r`; el centro es `c`. Los pivotes se colocan en la
+junta física que representan, nunca donde resulte cómodo para una pose aislada.
 
-## Materiales y texturas
+## Requisitos del modelo maestro
 
-La primera entrega admite un máximo de cuatro materiales exportados:
+- No tiene un presupuesto de triángulos arbitrario. La densidad se justifica
+  por silueta, biseles, cavidades y cámara de revisión.
+- Conserva modificadores y fuentes editables hasta la aprobación de cada
+  puerta; no se destruye la capacidad de corregir el diseño.
+- Usa geometría real para detalles que alteran el borde, proyectan sombra o
+  cambian el reflejo a cámara cercana.
+- Usa UVs limpias y texturas PBR de fuente de hasta `4096 px` cuando la
+  comparación de render lo justifique. La resolución no se incrementa por
+  costumbre.
+- Genera renders de revisión en frente, perfil, reverso y tres cuartos, sobre
+  fondo neutro y con iluminación editorial separada.
 
-| Material            | Uso                           | Texturas permitidas                                                   |
-| ------------------- | ----------------------------- | --------------------------------------------------------------------- |
-| `mat_nexo_graphite` | Carcasa, torso y extremidades | Base color, normal, metallic-roughness, AO opcional                   |
-| `mat_nexo_visor`    | Visor oscuro                  | Base color, metallic-roughness y emisión mínima si aporta legibilidad |
-| `mat_nexo_gold`     | Antena, ojos y acentos        | Base color, metallic-roughness y emisión selectiva                    |
-| `mat_nexo_core`     | Núcleo e icono de estado      | Base color, metallic-roughness, emisión y normal si es necesaria      |
+## Requisitos del derivado web
 
-- Resolución inicial: mapas de `1024 px`; `2048 px` requiere comparación visual
-  y justificación escrita.
-- El brillo del núcleo se produce con material emisivo, no con un halo o luz
-  horneada en una textura.
-- Sombras, humo, escarcha y reflejos de estudio de la lámina no forman parte de
-  las texturas base.
-- Las texturas se empaquetan en el GLB de entrega; las fuentes editables se
-  conservan junto al `.blend` mientras el tamaño lo permita.
+| Recurso               |    Objetivo | Revisión obligatoria por encima de |
+| --------------------- | ----------: | ---------------------------------: |
+| Triángulos            | `<= 18 000` |                           `25 000` |
+| Materiales exportados |      `<= 4` |                                `4` |
+| Resolución por mapa   |   `1024 px` |                          `2048 px` |
+| Peso de GLB           | `<= 1.5 MB` |                             `2 MB` |
+| Respaldo WebP         |  `<= 80 KB` |                           `120 KB` |
 
-## Presupuesto de runtime
+La malla web puede conservar más geometría si una comparación documentada
+demuestra que perderla altera de forma visible el casco, visor, núcleo,
+articulaciones o silueta a los tamaños de uso. La justificación no cambia la
+fuente maestra ni se oculta en un comentario de código.
 
-| Recurso                   |    Objetivo | Límite que requiere justificación |
-| ------------------------- | ----------: | --------------------------------: |
-| Triángulos de LOD inicial | `<= 18 000` |                        `> 25 000` |
-| Materiales                |      `<= 4` |                             `> 4` |
-| Resolución por mapa       |   `1024 px` |                         `2048 px` |
-| Peso de `nexo.glb`        | `<= 1.5 MB` |                          `> 2 MB` |
-| Respaldo WebP             |  `<= 80 KB` |                        `> 120 KB` |
-| Clips iniciales           |         `4` |              `> 5` antes de medir |
+## Materiales y horneado
 
-El presupuesto se mide sobre el artefacto final publicado, no sobre el archivo
-`.blend`. Un resultado que supere un límite puede aprobarse si explica qué
-legibilidad o expresividad gana y cómo protege la carga diferida.
+El maestro puede emplear materiales de revisión separados para comprobar
+lectura. El derivado web consolida, como máximo, estos cuatro roles:
 
-## Rig y clips iniciales
+1. `mat_nexo_graphite_web`: carcasa, torso y extremidades.
+2. `mat_nexo_dark_metal_web`: articulaciones, biseles y cavidades.
+3. `mat_nexo_visor_web`: superficie interior negra del rostro.
+4. `mat_nexo_gold_web`: núcleo, nodos, ojos y acentos emisivos.
 
-El rig se construye después de aprobar malla, UV y materiales. Las acciones de
-la primera versión se exportan con estos nombres:
+Normal, AO y metallic-roughness se hornean desde `HIG_NEXO` a `LOW_NEXO`
+solo después de fijar UVs. No se hornean ojos, boca, cejas o el icono del núcleo
+si necesitan cambiar de estado.
 
-| Clip             | Propósito                      | Repetición                  |
-| ---------------- | ------------------------------ | --------------------------- |
-| `nexo_idle`      | Reposo mínimo con pausa amplia | Sí, solo cuando sea visible |
-| `nexo_wave`      | Saludo breve                   | No                          |
-| `nexo_think`     | Orientación o búsqueda         | No                          |
-| `nexo_celebrate` | Confirmación discreta          | No                          |
+## Rig y acciones
 
-Las expresiones de visor y los iconos del núcleo serán controles independientes.
-No se promete sincronía labial en esta etapa. Cualquier nuevo clip exige una
-razón de producto y una revisión visual.
+El rig empieza cuando modelo maestro y derivado web comparten jerarquía de
+piezas aprobada. Las mallas rígidas se parentan a huesos; no se deforman como
+goma.
+
+| Clip             | Uso                    | Repetición              |
+| ---------------- | ---------------------- | ----------------------- |
+| `nexo_idle`      | Reposo mínimo          | Sí, cuando esté visible |
+| `nexo_wave`      | Saludo breve           | No                      |
+| `nexo_think`     | Búsqueda u orientación | No                      |
+| `nexo_celebrate` | Confirmación discreta  | No                      |
+
+Rostro y núcleo usan controles independientes. La voz, el navegador y las
+futuras capacidades de Nexo no forman parte del contrato de malla.
 
 ## Exportación y validación
 
-1. Aplicar transformaciones y confirmar que solo `EXPORT_NEXO` está seleccionada.
-2. Exportar GLB con mallas, materiales, skinning y acciones nombradas.
-3. Revisar el archivo en un visor GLB antes de integrarlo: escala, frente,
-   materiales, clips, ojos, boca y núcleo.
-4. Medir triángulos, materiales, texturas y bytes frente al presupuesto.
-5. Probar la carga en una isla local con fondo claro y oscuro.
-6. Validar el respaldo estático y `prefers-reduced-motion`.
+1. Verificar que `EXPORT_NEXO` contiene solo `LOW_NEXO`, rig exportable,
+   materiales web y acciones aprobadas.
+2. Exportar GLB sin referencias, cámaras, luces, colecciones de control ni
+   geometría maestra.
+3. Comparar maestro y derivado a `112 px`, `224 px` y `448 px` en fondo
+   claro y oscuro.
+4. Medir triángulos, bytes, materiales y resolución de mapas.
+5. Revisar escala, frente, ojos, boca, núcleo, clips y orientación en un visor
+   GLB antes de integrarlo.
+6. Probar carga diferida, `prefers-reduced-motion` y `nexo-static.webp` en el
+   sitio.
 
-No se agregan compresores, loaders o dependencias de renderizado hasta que un
-issue de integración documente el problema, las alternativas y la justificación
-de esa dependencia, conforme a RFC-0001 §13.
+No se agregan compresores, loaders o dependencias de renderizado sin un issue
+que explique problema, alternativas y justificación, conforme a RFC-0001 §13.
 
-## Contrato web
+## Trabajo bloqueado hasta revisión
 
-- Astro entrega la página estática; la escena 3D vive en una isla Vue opcional.
-- El GLB se carga después de interacción, ociosidad o visibilidad, nunca como
-  requisito para leer contenido.
-- Al ocultarse Nexo, cambiar de pestaña o activarse movimiento reducido, el
-  render y las animaciones se pausan.
-- Si WebGL, el modelo o la carga fallan, se muestra `nexo-static.webp` sin
-  bloquear navegación, arrastre ni texto alternativo.
-- La posición proporcional en `localStorage` sigue perteneciendo al componente
-  de Nexo, no al archivo GLB.
-
-## Revisión humana previa al blockout
-
-- [ ] La estructura de archivos evita mezclar fuente y entrega web.
-- [ ] Las colecciones separan referencia, geometría, rig, controles y export.
-- [ ] Escala, origen, materiales y nombres son comprensibles para otra persona.
-- [ ] El presupuesto protege la experiencia móvil sin degradar el arte aprobado.
-- [ ] Las acciones iniciales y el respaldo estático son suficientes para la
-      primera integración.
-- [ ] Ninguna dependencia externa se aprobó implícitamente.
-
-Tras esta revisión, [#12](https://github.com/jeresoftx/academy-web/issues/12)
-puede comenzar el blockout de Blender contra dos contratos: visual y técnico.
+No se crea `nexo-master-v1.blend`, no se retopologiza ni se exporta GLB hasta
+que la biblia de modelo y el plan de producción reciban revisión humana.

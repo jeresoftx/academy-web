@@ -1,170 +1,202 @@
-# Ficha canónica de modelado: Nexo 3D
+# Biblia de modelo: Nexo 3D
 
-**Estado:** propuesta de producción; requiere revisión humana antes de abrir el
-issue de blockout.
+**Estado:** propuesta de producción v2; requiere revisión humana antes de
+reiniciar el blockout.
 
-**Trazabilidad:** [issue #10](https://github.com/jeresoftx/academy-web/issues/10)
-del Project de Nexo. Esta ficha interpreta el arte aprobado para modelado; no
-reemplaza las decisiones del Manual Fundacional RFC-0001.
+**Trazabilidad:** [issue #27](https://github.com/jeresoftx/academy-web/issues/27)
+del Project de Nexo. Esta biblia sustituye la lectura simplificada anterior de
+la cabeza. No modifica las decisiones del Manual Fundacional RFC-0001.
 
-## Concepto
+## Propósito
 
-Nexo es el compañero de taller de Jeresoft Academy: una máquina compacta,
-modular y serena. Su presencia debe sugerir oficio, curiosidad y construcción
-cuidadosa. Acompaña, orienta y celebra avances breves; nunca compite con la
-lectura ni se presenta como una persona consciente.
+Nexo debe poder sostener una cámara de render cercana sin perder el carácter
+del arte aprobado. El objetivo no es producir un robot genérico inspirado en
+las láminas: es reconstruir una versión físicamente coherente de su diseño,
+con sus ensamblajes, profundidad, materialidad y expresividad.
 
-La referencia principal es la
-[lámina de concepto aprobada](../assets/nexo-concept-01.png). El modelo 3D
-debe conservar su materialidad editorial —grafito envejecido, visor profundo y
-energía dorada— sin intentar copiar cada píxel o inconsistencia propia de una
-imagen conceptual generada.
+La identidad no se sacrifica por velocidad ni por el presupuesto del sitio. La
+optimización web ocurre después, como un derivado del modelo maestro.
 
-## Problema
+## Lectura de referencias
 
-La lámina reúne varias poses, expresiones y vistas, pero no define una malla
-única. Modelar directamente sobre ella conduce a decisiones contradictorias:
-una cabeza puede parecer más redonda en una vista y más ancha en otra; algunos
-detalles funcionan como iluminación editorial y no como piezas físicas.
+Las imágenes generadas no son planos ortográficos perfectos: cambian la luz,
+la perspectiva y algún detalle fino entre poses. Por ello se establece una
+jerarquía explícita. Una discrepancia no se resuelve por intuición durante el
+modelado; se registra y se valida en revisión.
 
-## Alternativas
+| Prioridad | Fuente                                                                   | Uso canónico                                                              |
+| --------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| 1         | [`nexo-production-sheet-01.png`](../assets/nexo-production-sheet-01.png) | Anatomía, despiece, frente, perfil, reverso y módulos mecánicos.          |
+| 2         | [`nexo-concept-01.png`](../assets/nexo-concept-01.png)                   | Carácter, expresiones, pose, iluminación editorial y estados del núcleo.  |
+| 3         | Esta biblia                                                              | Resolución de contradicciones, escala, geometría y límites de producción. |
 
-1. Trazar una vista aislada y completar el resto por intuición.
-2. Usar una cabeza cúbica o una esfera perfecta por comodidad de modelado.
-3. Definir una anatomía canónica de bajo riesgo y validar su silueta antes de
-   detallar.
+La meta de "idéntico al arte" significa idéntico a esta especificación canónica
+aprobada, no copiar píxeles incompatibles de vistas con distinta perspectiva.
 
-## Decisión
+## Diagnóstico que corrige la ficha anterior
 
-Se adopta la tercera alternativa. La geometría inicial se construirá con
-volúmenes simples derivados de esta ficha. No se crearán paneles, tornillos,
-texturas, rig ni animaciones hasta aprobar el blockout desde las cuatro vistas.
+La descripción anterior de una "cabeza casi esférica aplastada" era
+insuficiente. La cabeza de Nexo es una **carcasa hard-surface de volumen ancho
+y redondeado**, formada por una envolvente superior, un marco frontal profundo
+y una banda inferior continua. El visor está encastrado dentro de esa carcasa;
+no es una esfera pegada ni la banda inferior es una mandíbula flotante.
 
-## Referencia y lectura correcta
+El perfil muestra además módulos laterales concéntricos, una transición de
+cuello corta, panel trasero de servicio y una antena ensamblada. Estas piezas
+definen la lectura industrial y deben existir antes de juzgar la semejanza.
 
-La cabeza de Nexo **no es una barra rectangular** y tampoco una pelota perfecta.
-Es una carcasa ovoide y ancha, cercana a una esfera mecánica aplastada en el eje
-vertical, con un visor oscuro incrustado en su cara frontal. Sus laterales
-incluyen módulos circulares; el contorno completo debe sentirse pesado, suave y
-redondeado.
+## Sistema de coordenadas y escala
 
-La vista tres cuartos frontal de la lámina es la pose de presentación. Las
-vistas frontal, lateral y posterior de la franja inferior sirven para comprobar
-simetría, profundidad y unión de piezas. Las expresiones laterales son una guía
-del rostro y del núcleo, no variantes de anatomía.
+- Unidad: metros; escala de escena `1.0`.
+- Altura de presentación, de la planta de los pies a los nodos de antena:
+  `1.00 m`.
+- Origen: punto medio entre los pies sobre el plano `Z = 0`.
+- Frente canónico: `-Y`; `Numpad 1` revisa frente, `Numpad 3` perfil derecho.
+- Simetría: eje `X`; se modela el lado izquierdo y se refleja salvo donde una
+  revisión apruebe una asimetría expresiva.
 
-## Proporciones canónicas
+Las medidas siguientes son envolventes de revisión, no instrucciones para
+escalar una esfera. Las proporciones mandan; una pieza puede ocupar menos
+volumen interno si conserva el contorno externo aprobado.
 
-La unidad de composición es la altura total de Nexo, `H = 1.00`. Las medidas son
-relativas: mantienen proporción durante el blockout y se convierten a metros
-reales en el contrato técnico del issue #11.
+| Conjunto           |  Ancho X | Profundidad Y |   Alto Z | Regla visual                                  |
+| ------------------ | -------: | ------------: | -------: | --------------------------------------------- |
+| Cabeza completa    | `0.54 m` |      `0.33 m` | `0.35 m` | Pesada, ancha, con base inferior contenida.   |
+| Visor visible      | `0.40 m` |      `0.05 m` | `0.20 m` | Recesado, nunca pegado ni convexo como lente. |
+| Torso completo     | `0.38 m` |      `0.29 m` | `0.25 m` | Más angosto que la cabeza; compacto.          |
+| Núcleo visible     | `0.15 m` |      `0.04 m` | `0.15 m` | Disco independiente, centrado y reemplazable. |
+| Antena sobre casco | `0.18 m` |      `0.08 m` | `0.12 m` | Base, mástil, horquilla y dos nodos.          |
 
-| Zona                | Proporción objetivo | Lectura visual                                     |
-| ------------------- | ------------------: | -------------------------------------------------- |
-| Altura total        |            `1.00 H` | Compacto y estable, nunca esbelto.                 |
-| Cabeza, ancho       |            `0.54 H` | Más ancha que el torso.                            |
-| Cabeza, alto        |            `0.34 H` | Ovoide horizontal, no bloque.                      |
-| Cabeza, profundidad |            `0.30 H` | Volumen suficiente para visor y módulos laterales. |
-| Torso, alto         |            `0.24 H` | Núcleo a la vista y hombros robustos.              |
-| Piernas y pies      |            `0.31 H` | Cortos, separados y pesados.                       |
-| Antena sobre cabeza |            `0.12 H` | Pequeño grafo de dos nodos luminosos.              |
+## Arquitectura de piezas
 
-Estas relaciones tienen prioridad sobre una dimensión aislada del concept art.
-Si una vista contradice a otra, la silueta frontal y la legibilidad a tamaño
-pequeño deciden.
+Una pieza es independiente cuando afecta silueta, tiene una junta o material
+distinto, requiere movimiento, debe recibir luz propia o necesita sustituirse
+para una expresión. No se separa cada rayón ni cada remache: el despiece sirve
+para construir, iluminar, animar y mantener el asset.
 
-## Anatomía y despiece
+### A. Cabeza y rostro
 
-```mermaid
-flowchart TD
-    Nexo[Nexo]
-    Nexo --> Head[Casco ovoide]
-    Head --> Visor[Visor profundo]
-    Head --> SideModules[Módulos laterales]
-    Head --> Antenna[Antena y dos nodos]
-    Nexo --> Torso[Torso compacto]
-    Torso --> Core[Núcleo circular emisivo]
-    Nexo --> Arms[Brazos articulados]
-    Arms --> Hands[Manos mecánicas]
-    Nexo --> Legs[Piernas articuladas]
-    Legs --> Feet[Pies anchos]
-```
+| Identificador                              | Pieza                         | Tratamiento obligatorio                                                                                                 |
+| ------------------------------------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `nexo_head_shell`                          | Envolvente superior y lateral | Casco redondeado hard-surface, con volumen continuo; no esfera ni cubo biselado como resultado final.                   |
+| `nexo_head_lower_bezel`                    | Banda inferior del casco      | Se integra visualmente al casco, sostiene el borde bajo del visor y define la "quijada" sin leerse como plato separado. |
+| `nexo_visor_bezel`                         | Marco frontal                 | Anillo grueso, redondeado y empotrado; genera sombra de oclusión alrededor del visor.                                   |
+| `nexo_visor_inner`                         | Superficie negra interior     | Cavidad oscura con curvatura leve hacia dentro; conserva contraste bajo luz de estudio.                                 |
+| `nexo_eye_l`, `nexo_eye_r`                 | Ojos luminosos                | Objetos independientes para orientación y estados.                                                                      |
+| `nexo_brow_l`, `nexo_brow_r`, `nexo_mouth` | Rasgos expresivos             | Elementos independientes, delgados y sustituibles; no se hornean en el visor.                                           |
+| `nexo_side_module_l`, `nexo_side_module_r` | Cápsulas laterales            | Ensamblajes concéntricos con carcasa, aro, disco central y transición al casco.                                         |
+| `nexo_head_back_panel`                     | Panel posterior               | Placa de servicio con rejilla horizontal, marco y profundidad propia.                                                   |
 
-| Pieza             | Forma canónica                                | Regla de modelado                                                            |
-| ----------------- | --------------------------------------------- | ---------------------------------------------------------------------------- |
-| Casco             | Ovoide redondeado con carcasa exterior        | Empezar con volumen casi esférico; nunca con cubo biselado como forma final. |
-| Visor             | Ventana negra, amplia y de esquinas orgánicas | Debe sentirse como una cavidad protegida, no como una pantalla pegada.       |
-| Módulos laterales | Discos mecánicos compactos                    | Simétricos y subordinados al casco.                                          |
-| Antena            | Base corta, brazos finos y dos nodos          | Sugiere conexión entre ideas; no debe elevar demasiado la silueta.           |
-| Torso             | Cápsula mecánica corta                        | Más angosto que la cabeza y orientado al núcleo.                             |
-| Núcleo            | Disco circular con patrón radial              | Pieza independiente para estados visuales futuros.                           |
-| Brazos            | Tres masas articuladas por lado               | Hombro, antebrazo y mano con volumen robusto.                                |
-| Manos             | Mecánicas, expresivas y legibles              | Preparadas para señalar, saludar y descansar; sin dedos hiperrealistas.      |
-| Piernas y pies    | Segmentos cortos con pies pesados             | El centro de gravedad debe verse bajo y estable.                             |
+La regla de lectura frontal es: casco exterior -> bisel profundo -> cavidad de
+visor -> rasgos luminosos. Si dos pasos se fusionan visualmente, el modelo no
+está listo para detalle.
 
-## Rasgos de identidad no negociables
+### B. Antena y cuello
 
-- Visor negro profundo, con dos ojos dorados separados y boca visible.
-- Cejas y boca son elementos independientes: podrán variar sin remodelar el
-  casco.
-- Antena superior con exactamente dos nodos luminosos conectados.
-- Núcleo circular dorado visible en el centro del torso.
-- Grafito mecánico como material principal; dorado como energía y acento, nunca
-  como color dominante de la carcasa.
-- Desgaste sutil de taller: paneles, uniones y marcas discretas, no suciedad que
-  reduzca legibilidad.
-- Silueta amable y robusta; no humanoide esbelto, arma, vehículo ni mascota
-  infantil genérica.
+| Identificador                                | Pieza              | Tratamiento obligatorio                                       |
+| -------------------------------------------- | ------------------ | ------------------------------------------------------------- |
+| `nexo_antenna_base`                          | Base sobre casco   | Disco corto y empotrado, no varilla saliendo de una esfera.   |
+| `nexo_antenna_stem`                          | Mástil articulado  | Tramos mecánicos cortos con juntas legibles.                  |
+| `nexo_antenna_yoke`                          | Horquilla          | Une ambos nodos con simetría limpia.                          |
+| `nexo_antenna_node_l`, `nexo_antenna_node_r` | Nodos dorados      | Esferas emisivas con soporte metálico visible.                |
+| `nexo_neck_gimbal`                           | Unión cabeza-torso | Volumen corto articulado; deja una separación de sombra real. |
 
-## Materialidad objetivo
+### C. Torso y núcleo
 
-| Material                | Intención                          | Aplicación                                                |
-| ----------------------- | ---------------------------------- | --------------------------------------------------------- |
-| Grafito envejecido      | Metal mate, trabajado y resistente | Casco, torso, extremidades y paneles.                     |
-| Visor negro             | Profundidad y contraste            | Superficie frontal, sin reflejos que oculten expresiones. |
-| Dorado cálido           | Energía, atención y señalización   | Ojos, antena, núcleo y acentos selectivos.                |
-| Metal oscuro secundario | Separar piezas móviles             | Articulaciones, uniones y perfiles.                       |
+| Identificador                        | Pieza           | Tratamiento obligatorio                                                                                                 |
+| ------------------------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `nexo_torso_shell`                   | Carcasa central | Cápsula mecánica con hombros robustos y paneles principales.                                                            |
+| `nexo_chest_bezel`                   | Aro del núcleo  | Bisel independiente con grosor y tornillería visible a cámara cercana.                                                  |
+| `nexo_core_outer`, `nexo_core_inner` | Núcleo          | Anillo exterior y emisor interior separados; el patrón radial es geometría o normal horneada según distancia de cámara. |
+| `nexo_backpack_panel`                | Panel posterior | Masa técnica que explica el volumen trasero; no se omite por no verse en la pose principal.                             |
 
-Los valores PBR concretos, UV y tamaño de texturas se definen en el contrato
-técnico. En esta etapa se valida el lenguaje de materiales, no mapas finales.
+### D. Extremidades
 
-## Poses y expresiones de referencia
+Cada lado usa los mismos conjuntos reflejados: `shoulder`, `upper_arm`,
+`elbow_joint`, `forearm`, `wrist`, `hand`, `hip`, `thigh`,
+`knee_joint`, `shin`, `ankle` y `foot`. Hombros, codos, muñecas,
+rodillas y tobillos tienen que ser volúmenes separados: son necesarios para el
+rig y para la lectura de máquina artesanal.
 
-La primera pose de reposo usa una orientación tres cuartos frontal, manos bajas,
-cabeza levemente inclinada y mirada atenta. La anatomía debe soportar las
-siguientes acciones sin alterar su identidad:
+Las manos se simplifican a palma, pulgar y dos bloques de dedos legibles; no
+se usan manos humanas hiperrealistas. Los pies son anchos, con talón, empeine y
+suela; el centro de masa queda bajo y entre ellos.
 
-- reposo y respiración mínima;
-- saludo;
-- pensamiento, con una mano cerca del visor;
-- señalamiento;
-- celebración;
-- cambios de ojos, cejas, boca y núcleo.
+## Niveles de detalle
 
-Estados como frío o calor pertenecen a la futura animación; la escarcha, vapor
-o partículas de la lámina no se modelan como parte del cuerpo base.
+| Nivel        | Se modela como geometría                                              | Se hornea o texturiza                                 |
+| ------------ | --------------------------------------------------------------------- | ----------------------------------------------------- |
+| Silueta      | Casco, bisel, visor, módulos, núcleo, articulaciones, pies y antena   | Nunca.                                                |
+| Primer plano | Paneles, ranuras, juntas, aros, rejilla trasera y tornillos visibles  | Detalle repetitivo menor a `2 mm`.                    |
+| Material     | Biselado real, hendiduras que proyectan sombra y desgaste estructural | Micro-rayones, poros, polvo y variación de rugosidad. |
+| Web          | Los elementos que cambian silueta o movimiento                        | El resto mediante normal, AO y mapas de material.     |
 
-## Qué no se modela en el blockout
+Un detalle se elimina del modelo web solo después de comprobar que su ausencia
+no cambia la silueta ni la lectura a `112 px`, `224 px` y `448 px`.
 
-- tornillos, rayones, juntas finas o patrones del núcleo;
-- dedos individuales, cables, rejillas y decoración interna;
-- iluminación, halo, sombra de contacto o humo;
-- expresiones faciales finales;
-- materiales, UV, rig, huesos o animaciones.
+## Topología y construcción del maestro
 
-## Revisión humana del model sheet
+- El casco comienza con una jaula de subdivisión controlada y se ajusta en
+  frente, perfil, reverso y tres cuartos; no con una esfera escalada como
+  geometría final.
+- Se usan modificadores no destructivos mientras sea posible: `Mirror`,
+  `Subdivision Surface`, `Bevel` y `Weighted Normal` o su equivalente actual.
+- Los huecos tienen espesor y profundidad. Un borde importante debe producir
+  sombra real antes de recibir un mapa de normal.
+- Las piezas móviles no se fusionan a la carcasa. Cada unión conserva holgura
+  física visible y pivote coherente.
+- Los booleanos se reservan para cavidades limpias y se revisan antes de
+  aplicar. No se aceptan artefactos, caras estiradas ni topología oculta.
+- El modelo maestro puede tener la densidad necesaria para un render de alta
+  resolución. No hereda el límite de triángulos del GLB web.
 
-Antes de iniciar [#12](https://github.com/jeresoftx/academy-web/issues/12), se
-confirma:
+## Materialidad de referencia
 
-- [ ] La cabeza se reconoce como casco ovoide ancho, no como barra ni esfera
-      perfecta.
-- [ ] El visor, la antena y el núcleo son visibles desde la pose de
-      presentación.
-- [ ] Cabeza, torso, pies y antena respetan las proporciones canónicas.
-- [ ] La anatomía permite animar expresiones y acciones planeadas.
-- [ ] La ficha conserva el carácter del arte aprobado sin prometer conciencia o
-      autonomía a Nexo.
+| Material                | Lectura                        | Aplicación                                      |
+| ----------------------- | ------------------------------ | ----------------------------------------------- |
+| Grafito envejecido      | Metal oscuro, mate y trabajado | Carcasas, paneles y extremidades.               |
+| Metal oscuro secundario | Separación funcional           | Juntas, biseles, articulaciones y cavidades.    |
+| Visor negro profundo    | Profundidad, no espejo         | Interior del rostro; deja visibles ojos y boca. |
+| Dorado cálido           | Energía y atención             | Nodos, ojos, núcleo y acentos mínimos.          |
 
-Con la aprobación de esta ficha, Blender pasa de exploración libre a ejecución
-contra una referencia compartida.
+El desgaste cuenta historia de taller: leves abrasiones en cantos, zonas de
+contacto y uniones. Nunca se usa suciedad uniforme para esconder una mala
+superficie.
+
+## Puertas de revisión visual
+
+No se avanza de una puerta a la siguiente sin una comparación aprobada con las
+referencias.
+
+1. **Despiece aprobado:** árbol de piezas, prioridad de referencias y escala.
+2. **Blockout aprobado:** frente, perfil, reverso y tres cuartos; casco,
+   visor, módulos, antena, torso, núcleo, brazos, piernas y pies presentes.
+3. **Modelo maestro aprobado:** contorno, juntas, profundidad, anatomía y
+   piezas móviles comparados sobre las láminas.
+4. **Lookdev aprobado:** grafito, visor, dorado, metal y desgaste leíbles bajo
+   iluminación neutra y editorial.
+5. **Rig aprobado:** todas las poses de la lámina se logran sin intersecciones
+   visibles ni deformación de piezas rígidas.
+6. **Derivado web aprobado:** conserva el carácter a tamaños reales y cumple
+   el contrato de rendimiento sin degradar la versión maestra.
+
+## Criterios de aceptación del modelo maestro
+
+- El contorno de cabeza, marco de visor y banda inferior coincide con las
+  cuatro vistas canónicas; no aparece como esfera, barra o plato separado.
+- Frente, lateral y reverso explican las mismas piezas, no tres robots
+  distintos.
+- Cada módulo lateral, panel trasero, núcleo y articulación tiene profundidad
+  suficiente para recibir iluminación creíble.
+- Nexo se reconoce sin ojos ni emisión solo por su silueta y ensamblajes.
+- El render a tres cuartos conserva oficio, peso y calidez sin depender de la
+  luz dramática de la lámina.
+- Las decisiones ambiguas se anotan para revisión humana antes de hacerse
+  permanentes.
+
+## Trabajo detenido
+
+El archivo exploratorio actual no es un fallo ni una entrega: sirvió para
+descubrir la deficiencia de la ficha previa. No se agregan torso, articulaciones
+ni detalle hasta aprobar esta biblia y preparar las guías ortográficas de la
+puerta 1.
