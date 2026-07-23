@@ -14,3 +14,5 @@ Documentos actuales:
   assets.
 - [`nexo-production.md`](./nexo-production.md): ficha 2D de producción de
   Nexo, con capas, paleta, estados y criterios para una futura animación Rive.
+- [`../assets/mascot/nexo-master.svg`](../assets/mascot/nexo-master.svg): arte
+  maestro vectorial preparado para importar y riggear en Rive.

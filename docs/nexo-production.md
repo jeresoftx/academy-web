@@ -33,6 +33,11 @@ es referencia de vistas, poses y expresiones. El futuro asset web se dibujará
 en vectores independientes; no se exportará esta imagen como animación ni se
 cargará a las personas visitantes.
 
+El primer arte maestro editable se conserva en
+[`../assets/mascot/nexo-master.svg`](../assets/mascot/nexo-master.svg). Sus
+grupos con identificadores (`nexo-head`, `nexo-face`, `nexo-core`, brazos,
+piernas y antena) son el punto de partida para la importación en Rive.
+
 ## Identidad no negociable
 
 - Cabeza de visor redondeado, más ancha que el torso.
