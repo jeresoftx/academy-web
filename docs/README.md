@@ -16,5 +16,7 @@ Documentos actuales:
   Nexo, con capas, paleta, estados y criterios para una futura animación Rive.
 - [`nexo-3d/model-sheet.md`](./nexo-3d/model-sheet.md): ficha canónica para
   traducir el arte aprobado de Nexo a modelado 3D, pendiente de revisión humana.
+- [`nexo-3d/technical-contract.md`](./nexo-3d/technical-contract.md): contrato
+  de producción Blender a GLB, presupuesto y reglas de entrega web de Nexo.
 - [`../assets/mascot/nexo-master.svg`](../assets/mascot/nexo-master.svg): arte
   maestro vectorial preparado para importar y riggear en Rive.
